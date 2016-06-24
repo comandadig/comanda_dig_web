@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+	 <ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	<p:layoutUnit  position="center">
+
+		<p:panel style="width: 95%;">
+		
+			<p:dataTable id="dataTable" var="usu" value="#{userMB.usarioList}"
+				paginator="true" rows="5">
+				<f:facet name="header">Usuários
+				<p:outputPanel style="height:16px">
+                
+                <p:commandButton action="go_user" ajax="false" immediate="true"  value="Add/Edit User"  style="float:left" icon="fa fa-user-plus" />
+       			
+            	</p:outputPanel>
+           		 
+           		  <p:spacer height="5px"/>
+        		</f:facet>
+
+
+			<p:column filterBy="#{usu.login}" headerText="Login"
+				 filterMatchMode="contains">
+				<p:outputLabel value="#{usu.login}" />
+			</p:column>
+
+				
+			<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Nome" />
+				</f:facet>
+				<p:outputLabel value="#{usu.nome}" />
+			</p:column>
+
+
+			<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="E-mail" />
+				</f:facet>
+				<p:outputLabel value="#{usu.email}" />
+			</p:column>
+
+
+			<p:column style="width:80px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Super User" />
+				</f:facet>
+				<center>
+					<p:graphicImage url="../imagens/green-fa-check-circle.png"
+						width="20px" height="20px"  />
+				</center>
+			</p:column>
+
+			<p:column style="width:80px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Foto" />
+				</f:facet>
+				<center>
+					<p:graphicImage url="../fotos/usu_#{usu.idUser}.jpg" width="60px"
+						height="60px" />
+				</center>
+			</p:column>
+			
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Endereço" />
+				</f:facet>
+				<p:commandButton ajax="true" actionListener="#{userMB.selectUser(usu)}"
+					update=":form:grid3" process="@this" title="End" value="end" oncomplete="PF('endDialog').show()" icon="fa fa-globe">
+				</p:commandButton>
+			</p:column>
+			
+			
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Salário" />
+				</f:facet>
+				<p:commandButton ajax="true" actionListener="#{userMB.selectUser(usu)}"
+					update=":form:gridSal" process="@this" title="sal" value="sal" oncomplete="PF('salDialog').show()" icon="fa fa-dollar">
+				</p:commandButton>
+			</p:column>
+
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Editar" />
+				</f:facet>
+				<p:commandButton ajax="true" actionListener="#{userMB.selectUser(usu)}"
+					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar">
+					<f:setPropertyActionListener value="#{usu}"
+						target="#{userMB.user}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Excluir" />
+				</f:facet>
+
+				<p:commandButton icon="ui-icon-trash" title="Excluir" type="subimt"
+					update="@all" process="@all" ajax="true"
+					action="#{userMB.excluir(usu)}" immediate="true">
+					<p:confirm header="Confirmação Exclusão"
+						message="Você tem certeza?" icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+		</p:panel>
+	
+		
+	
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+		<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
+			icon="ui-icon-check" />
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</p:confirmDialog>
+	
+	<p:dialog header="Endereço" widgetVar="endDialog" width="700px"  position="center"
+		resizable="true" draggable="true" showEffect="clip" 
+		hideEffect="clip" modal="false" maximizable="true" minimizable="true">
+
+		<p:outputPanel id="display2">
+			<center>
+			<h:panelGrid id="grid3" columns="2" cellpadding="5">
+				<f:facet name="Endereço" />
+				
+				<p:outputLabel value="UF: " />
+				<p:inputText value="#{userMB.endereco.uf}" style="width: 300px;" disabled="true" />
+				
+				<p:outputLabel value="Cidade: " />
+				<p:inputText value="#{userMB.endereco.cidade}" style="width: 300px;" disabled="true" />
+				
+				<p:outputLabel value="Bairro: " />
+				<p:inputText value="#{userMB.endereco.bairro}" style="width: 300px;" disabled="true" />
+				
+				<p:outputLabel value="Rua: " />
+				<p:inputText value="#{userMB.endereco.rua}" style="width: 300px;" disabled="true" />
+				
+				<p:outputLabel value="CEP: " />
+				<p:inputText value="#{userMB.endereco.cep}" style="width: 300px;" disabled="true" />
+				
+				<p:outputLabel value="Nr: " />
+				<p:inputText value="#{userMB.endereco.nr}" style="width: 300px;"  disabled="true"/>
+				
+								
+			</h:panelGrid>
+			<p:separator></p:separator>
+			
+			</center>
+			
+		</p:outputPanel>
+	</p:dialog>
+	
+	
+	<p:dialog header="Dados Sálariais" widgetVar="salDialog" width="700px"  position="center"
+		resizable="true" draggable="true" showEffect="clip" 
+		hideEffect="clip" modal="false" maximizable="true" minimizable="true">
+
+		<p:outputPanel id="displaySal">
+			<center>
+			<h:panelGrid id="gridSal" columns="2" cellpadding="5">
+				<f:facet name="Dados Saláriais" />
+				
+				<p:outputLabel value="Valor Salário Bruto: " />
+				 <pe:inputNumber id="Input1"  value="#{userMB.salarioUser.salario}"  style="width:30px" disabled="true">  
+                	<p:ajax event="blur" update=":form:Input1" />  
+            	</pe:inputNumber>  
+				
+				<p:outputLabel for="sliderPag" value="Dia Pagamento:"/>
+		        <p:outputPanel>
+		            <p:inputText id="sliderPag" value="#{userMB.salarioUser.diaPagamento}" style="width:150px" disabled="true"/>
+		            <p:slider for="sliderPag" maxValue="31" minValue="1" style="width:150px"  disabled="true"/>
+		        </p:outputPanel>
+				
+				<p:outputLabel  value="Percentual comissão:"/>
+		       
+		        
+		        <h:panelGrid columns="1" style="margin-bottom: 10px" >
+       				<p:outputLabel id="output" value="Valor Percentual #{userMB.percent} %"  style="width:150px" />
+        			<h:inputHidden id="txt2" value="#{userMB.percent}" />
+        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px" disabled="true"/>
+    			</h:panelGrid>
+    			
+    			<p:outputLabel for="pag" value="Forma de Pagamento" />
+        		<p:selectOneButton id="pag" value="#{userMB.salarioUser.formaPagamento}" disabled="true" >
+            		<f:selectItem itemLabel="Deposito Conta Corrente" itemValue="cc" />
+           			 <f:selectItem itemLabel="Pagamento em Dinheiro" itemValue="din" />
+           			 <p:ajax  process="@this,:form:gridSal" update="@this,:form:gridSal"  />
+        		</p:selectOneButton>
+				
+				<p:outputLabel for="banco" value="Banco" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}" />
+				<p:inputText id="banco" value="#{userMB.salarioUser.banco}" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}"  disabled="true"/>
+				
+				<p:outputLabel for="agencia" value="Agencia" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}" />
+				<p:inputText id="agencia" value="#{userMB.salarioUser.agencia}" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}" disabled="true" />
+				
+				<p:outputLabel for="cc" value="Conta Corrente" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}" />
+				<p:inputText id="cc" value="#{userMB.salarioUser.contaCorrente}" rendered="#{userMB.salarioUser.formaPagamento == 'cc'}" disabled="true" />
+								
+			</h:panelGrid>
+			<p:separator></p:separator>
+			
+			</center>
+			
+		</p:outputPanel>
+	</p:dialog>
+	
+</p:layoutUnit>
+</p:layout>	
+	
+</h:form>
+
+</html>

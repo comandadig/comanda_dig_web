@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<f:view contentType="text/html">
+<h:head>
+
+<ui:include src="../css/all_css.css" />
+
+</h:head>
+	
+
+	
+</f:view>
+		
+		<p:layoutUnit  position="west" size="170" style="width: 350px;" header="Menu" resizable="true"  collapsible="true" styleClass="teste">
+
+			
+				
+				<p:panelMenu style="width:165px" >
+					
+					<p:submenu label="Admin">
+						<p:menuitem value="Usuários" icon="fa fa-users" ajax="false"
+							action="go_userInit" immediate="true" />
+						<p:menuitem value="Itens Menu" icon="fa fa-sitemap" ajax="false"
+							action="go_itensInit" immediate="true" />
+						<p:menuitem value="Usuário CRUD" icon="fa fa-user-plus"
+							ajax="false" action="go_user" immediate="true" />
+						<p:menuitem value="Menu CRUD" icon="fa fa-list-alt"
+							ajax="false" action="go_catMenu" immediate="true" />
+					</p:submenu>
+					<p:submenu label="Caixa">
+						<p:menuitem value="Home" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+						<p:menuitem value="Abertura/Fechamento" ajax="false" immediate="true" action="agndMeet"	icon="fa fa-gears" />
+						<p:menuitem value="Movimentação" ajax="false" immediate="true" action="go_ativUser" icon="fa fa-list-alt" />
+						<p:menuitem value="Fila Bar/cozinha" ajax="false" icon="fa fa-calendar" action="go_calendar" immediate="true" />
+					</p:submenu>
+					<p:separator />
+					
+					<p:submenu label="Comanda Menu">
+					<p:menuitem value="Consulta Comanda" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+					<p:menuitem value="Fechamento Comanda" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+					<p:menuitem value="Extravio Comanda" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+					</p:submenu>
+
+					<p:submenu label="Relatórios">
+						<p:menuitem value="Report 1" ajax="false" icon="fa fa-file-pdf-o" />
+						<p:menuitem value="Report 2" ajax="false" icon="fa fa-file-pdf-o" />
+						<p:menuitem value="Report 3" ajax="false" icon="fa fa-file-pdf-o" />
+
+					</p:submenu>
+
+				</p:panelMenu>
+
+			
+
+		</p:layoutUnit>
+
+	
+
+
+
+
+	
+
+
+</html>

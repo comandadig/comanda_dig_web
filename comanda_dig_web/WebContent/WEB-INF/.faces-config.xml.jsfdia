@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#pages#init.xhtml" PATH="/pages/init.xhtml"
+  SHAPE="216,112,50,25" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#userInit.xhtml"
+  PATH="/pages/userInit.xhtml" SHAPE="152,280,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#user.xhtml" PATH="/pages/user.xhtml"
+  SHAPE="350,289,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#categoria.xhtml"
+  PATH="/pages/categoria.xhtml" SHAPE="536,280,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#Item.xhtml" PATH="/pages/Item.xhtml"
+  SHAPE="800,272,50,25" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#ItensCat.xhtml"
+  PATH="/pages/ItensCat.xhtml" SHAPE="381,426,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#itensInit.xhtml"
+  PATH="/pages/itensInit.xhtml" SHAPE="232,512,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#login.xhtml" PATH="/pages/login.xhtml"
+  SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#login.xhtml:0" NAME="item"
+   PATH="/pages/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="go_init::#pages#init.xhtml" NAME="output"
+    PATH="/pages/init.xhtml" TARGET="rules:#pages#init.xhtml"
+    TITLE="go_init" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="go_userInit::#pages#userInit.xhtml"
+    NAME="output" PATH="/pages/userInit.xhtml"
+    TARGET="rules:#pages#userInit.xhtml" TITLE="go_userInit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_user::#pages#user.xhtml" NAME="output1"
+    PATH="/pages/user.xhtml" TARGET="rules:#pages#user.xhtml"
+    TITLE="go_user" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_catMenu::#pages#categoria.xhtml"
+    NAME="output2" PATH="/pages/categoria.xhtml"
+    TARGET="rules:#pages#categoria.xhtml" TITLE="go_catMenu" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_ItemMenu::#pages#Item.xhtml"
+    NAME="output3" PATH="/pages/Item.xhtml"
+    TARGET="rules:#pages#Item.xhtml" TITLE="go_ItemMenu" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_itensCat::#pages#ItensCat.xhtml"
+    NAME="output4" PATH="/pages/ItensCat.xhtml"
+    TARGET="rules:#pages#ItensCat.xhtml" TITLE="go_itensCat" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_itensInit::#pages#itensInit.xhtml"
+    NAME="output5" PATH="/pages/itensInit.xhtml"
+    TARGET="rules:#pages#itensInit.xhtml" TITLE="go_itensInit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>
