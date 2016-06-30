@@ -54,6 +54,7 @@ public class CategoriaMB  implements Serializable {
 				categoriaMenuPersist.setDescricao(this.getCategoriaMenu().getDescricao());
 				categoriaMenuPersist.setFoto(this.getCategoriaMenu().getFoto());
 				categoriaMenuPersist.setNome(this.getCategoriaMenu().getNome());
+				categoriaMenuPersist.setDirfoto(FotoUtil.getDiFoto(categoriaMenu));
 				this.categoriaMenu = this.categoriaItensMenuFacade.updateCategoria(this.categoriaMenu);
 				String info = "Categoria alterada com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoriaMenu.getNome() + info , null));
@@ -67,6 +68,7 @@ public class CategoriaMB  implements Serializable {
 		} else {
 			try{
 				this.categoriaItensMenuFacade.saveCategoria(this.categoriaMenu);
+				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_FATAL, info , null));
@@ -81,7 +83,15 @@ public class CategoriaMB  implements Serializable {
 	}
 
 	
-	 public void handleFileUpload(FileUploadEvent event) {
+	 private void atualizaDirFoto() {
+		 if (this.categoriaMenu != null && this.categoriaMenu.getIdCategoriaMenu() != null){
+			 categoriaMenu.setDirfoto(FotoUtil.getDiFoto(categoriaMenu));
+			 categoriaMenu = categoriaItensMenuFacade.updateCategoria(categoriaMenu);
+		 }
+	}
+
+
+	public void handleFileUpload(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         this.categoriaMenu.setFoto(event.getFile().getContents());
         FacesContext.getCurrentInstance().addMessage(null, message);

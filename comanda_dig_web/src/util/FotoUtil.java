@@ -165,9 +165,9 @@ public class FotoUtil implements ServletContextListener{
 	
 	public static String getDiFoto(Object object){
 		
-		if (object instanceof User) return  CONTEXT_PATH_FOTOS + File.separator+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
-		else if (object instanceof CategoriaMenu) return CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA + ((CategoriaMenu)object).getIdCategoriaMenu()+EXTENCAO;
-		else if (object instanceof ItemMenu) return CONTEXT_PATH_FOTOS + File.separator+ TIPE_ITEM + ((ItemMenu)object).getIdItemMenu()+EXTENCAO;
+		if (object instanceof User) return  PASTA_DEFAULT_FOTOS + "/"+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
+		else if (object instanceof CategoriaMenu) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((CategoriaMenu)object).getIdCategoriaMenu()+EXTENCAO;
+		else if (object instanceof ItemMenu) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_ITEM + ((ItemMenu)object).getIdItemMenu()+EXTENCAO;
 		return null;
 	}
 

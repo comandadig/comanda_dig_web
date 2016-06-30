@@ -98,6 +98,7 @@ public class UserMB  implements Serializable {
 			
 			try{
 				this.userFacade.save(user);
+				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_FATAL, info , null));
@@ -149,6 +150,15 @@ public class UserMB  implements Serializable {
 	
 	
 	
+
+
+	private void atualizaDirFoto() {
+		if(this.user != null && this.user.getIdUser() != null){
+			user.setDirFoto(FotoUtil.getDiFoto(user));
+			user = this.userFacade.update(user);
+		}
+	}
+
 
 
 	public void excluir(User User){

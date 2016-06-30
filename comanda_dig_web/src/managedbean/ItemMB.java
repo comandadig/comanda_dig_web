@@ -81,6 +81,7 @@ public class ItemMB  implements Serializable {
 				itemMenuPersist.setFoto(this.itemMenu.getFoto());
 				itemMenuPersist.setNome(this.itemMenu.getNome());
 				itemMenuPersist.setValor(this.itemMenu.getValor());
+				itemMenuPersist.setDirFoto(FotoUtil.getDiFoto(itemMenu));
 				this.itemMenu = this.categoriaItensMenuFacade.updateItem(this.itemMenu);
 				String info = "Item alterado com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,itemMenu.getNome() + info , null));
@@ -94,6 +95,7 @@ public class ItemMB  implements Serializable {
 		} else {
 			try{
 				this.categoriaItensMenuFacade.saveItem(this.itemMenu);
+				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_FATAL, info , null));
@@ -107,6 +109,9 @@ public class ItemMB  implements Serializable {
 	}
 
 	
+	
+
+
 	public void editar(ItemMenu itemMenu){
 		this.itemMenu = itemMenu;
 		if (this.itemMenu.getCategoriaMenu() != null){
@@ -127,6 +132,14 @@ public class ItemMB  implements Serializable {
 	        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 	
+	 
+	 private void atualizaDirFoto() {
+			if(this.itemMenu != null && this.itemMenu.getIdItemMenu() != null){
+				itemMenu.setDirFoto(FotoUtil.getDiFoto(itemMenu));
+				itemMenu = this.categoriaItensMenuFacade.updateItem(itemMenu);
+			}
+		}
+	 
 	
 	public CategoriaItensMenuFacade getCategoriaItensMenuFacade() {
 		return categoriaItensMenuFacade;
