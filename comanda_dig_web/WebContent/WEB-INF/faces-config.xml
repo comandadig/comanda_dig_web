@@ -12,6 +12,8 @@
    <to-view-id>/pages/init.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
+ 
+ 
  <navigation-rule>
   <from-view-id></from-view-id>
   <navigation-case>
@@ -37,6 +39,10 @@
   <navigation-case>
    <from-outcome>go_itensInit</from-outcome>
    <to-view-id>/pages/itensInit.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>go_cartao</from-outcome>
+   <to-view-id>/pages/cartao.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
  <referenced-bean>

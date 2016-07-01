@@ -47,6 +47,12 @@
    <PROCESS-ITEM-OUTPUT ID="go_itensInit::#pages#itensInit.xhtml"
     NAME="output5" PATH="/pages/itensInit.xhtml"
     TARGET="rules:#pages#itensInit.xhtml" TITLE="go_itensInit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_cartao::#pages#cartao.xhtml"
+    NAME="output6" PATH="/pages/cartao.xhtml"
+    TARGET="rules:#pages#cartao.xhtml" TITLE="go_cartao" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
+  PATH="/pages/cartao.xhtml" SHAPE="494,596,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>
