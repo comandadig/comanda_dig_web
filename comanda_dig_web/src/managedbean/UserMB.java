@@ -203,6 +203,8 @@ public class UserMB  implements Serializable {
 		System.out.println(user.getIdUser());
 		this.endereco = this.userFacade.findEnderecoByUser(user.getIdUser());
 		this.salarioUser = this.userFacade.findSalarioByUser(user.getIdUser());
+		if (this.endereco == null) this.endereco = new Endereco();
+		if (this.salarioUser == null) this.salarioUser = new SalarioUser();
 	}
 	
 	public void limparSal(){
