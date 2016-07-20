@@ -11,8 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import model.User;
 import ejb.UserFacade;
+import model.User;
 
 
 
@@ -31,8 +31,6 @@ public class LoginMB  implements Serializable {
 	private String senha = new String();
 	
 	
-	
-	
 	public LoginMB() {
 
 	}
@@ -47,14 +45,8 @@ public class LoginMB  implements Serializable {
 	
 	
 	
-	
-	
-	
-	
 	public String login(){
-		
 		List<User>  list = usuarioFacade.listarPorLogin(this.login);
-		
 		if (list != null && !list.isEmpty()){
 			this.usuario = list.get(0);
 			if (usuario.getSenha().equals(this.senha)){

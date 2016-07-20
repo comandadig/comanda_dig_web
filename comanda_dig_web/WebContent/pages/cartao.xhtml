@@ -39,7 +39,7 @@
 					<p:outputLabel  value="Numero Cod Comanda: " maxlength="100" />
 					
 					<p:inputText id="nomeId" value="#{cartaoComandaMB.cartaoComanda.codComanda}"
-						maxlength="100" required="true" style="width: 200px;" />
+						maxlength="100" required="true" style="width: 125px;" />
 					
 		
 					
@@ -49,8 +49,9 @@
 		       
 			        <p:selectOneMenu id="sit" required="true" value="#{cartaoComandaMB.cartaoComanda.situacao}" style="width:125px">
 			            <f:selectItem itemLabel="Selecione:" itemValue="" />
-			            <f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
-			            <f:selectItem itemLabel="Extraviado" itemValue="Extraviado" />
+			            <f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
+			            <f:selectItem itemLabel="DESATIVADO" itemValue="DESATIVADO" />
+			            <f:selectItem itemLabel="ESTRAVIADO" itemValue="ESTRAVIADO" />
         			</p:selectOneMenu>
 					
 					

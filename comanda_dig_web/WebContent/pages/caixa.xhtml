@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				<center>          			
+  				
+				
+				<p:panel id="cadcat" header="Cadastro Cartaão Comanda" style="width: 95%;" >
+				<p:panel style="width: 50%;">
+				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
+					
+					<p:outputLabel for="time" value="Caixa Aberto:"  rendered="#{caixaMB.caixaAberto}" style="width: 120px"/>
+        			<p:calendar id="time" value="#{caixaMB.caixa.dtAbertura}"  pattern="MM/dd/yyyy HH:mm:ss" readonly="true" showOn="button" style="width: 120px" rendered="#{caixaMB.caixaAberto}" />
+					<p:commandButton id="btn"  update="@form" process="@this" style="width: 120px" 
+					value="Abrir Caixa" icon="fa fa-edit" actionListener="#{caixaMB.abrirCaixa()}" ajax="true" rendered="#{!caixaMB.caixaAberto}"/>
+					<p:commandButton id="btnFechar"  update="@form" process="@this" style="width: 120px"
+					value="Fechar Caixa" icon="fa fa-edit" actionListener="#{caixaMB.fecharCaixa()}" ajax="true" rendered="#{caixaMB.caixaAberto}"/>
+					
+				</h:panelGrid>
+				</p:panel>
+				<p:separator></p:separator>
+				
+				<p:accordionPanel rendered="#{caixaMB.caixaAberto}">
+        		<p:tab title="Comandas">
+	            	<h:panelGrid columns="2" cellpadding="10">
+		               
+		               <p:dataGrid var="comand" value="#{caixaMB.comandasDisponiveis}" columns="3" layout="grid"
+						        rows="12" paginator="true" id="cars"
+						        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						        rowsPerPageTemplate="6,12,16">
+ 
+					        <f:facet name="header">
+					            Comandas Disponoveis
+					        </f:facet>
+					 
+					       <p:panel header="#{comand.cartaoComanda.codComanda}" style="text-align:center">
+				            <h:panelGrid columns="1" style="width:100%">
+				                <p:graphicImage url="../imagens/barcode-icon.jpg"  width="40px" height="40px" />
+				 
+				                <h:outputText value="#{comand.cartaoComanda.codComanda}" />
+				 
+				                <p:commandLink update=":form:comDetail" oncomplete="PF('comDialog').show()" title="Comanda Detail">
+				                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+				                    <f:setPropertyActionListener value="#{comand}" target="#{caixaMB.comandaSelect}" />
+				                </p:commandLink>
+				            </h:panelGrid>
+				        </p:panel>
+    					</p:dataGrid>
+	            	</h:panelGrid>
+        		</p:tab>
+        		</p:accordionPanel>
+			</p:panel>
+		</center>
+		
+</p:layoutUnit>	
+</p:layout>
+
+<p:dialog header="Comanda" widgetVar="comDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="comDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty caixaMB.comandaSelect}" columnClasses="label,value">
+                <f:facet name="header">
+					<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
+                </f:facet>
+ 
+                <h:outputText value="Codigo Comanda:" />
+                <h:outputText value="#{caixaMB.comandaSelect.cartaoComanda.codComanda}" />
+ 
+                <h:outputText value="Data Abertura Caixa" />
+                <h:outputText value="#{caixaMB.comandaSelect.caixa.dtAbertura}" />
+ 
+                <h:outputText value="Situação" />
+                <h:outputText value="#{caixaMB.comandaSelect.cartaoComanda.situacao}"/>
+ 
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+
+	
+</h:form>
+
+</html>

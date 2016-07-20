@@ -35,9 +35,9 @@
    <PROCESS-ITEM-OUTPUT ID="go_user::#pages#user.xhtml" NAME="output1"
     PATH="/pages/user.xhtml" TARGET="rules:#pages#user.xhtml"
     TITLE="go_user" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="go_catMenu::#pages#categoria.xhtml"
-    NAME="output2" PATH="/pages/categoria.xhtml"
-    TARGET="rules:#pages#categoria.xhtml" TITLE="go_catMenu" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_caixa::#pages#caixa.xhtml" NAME="output2"
+    PATH="/pages/caixa.xhtml" TARGET="rules:#pages#caixa.xhtml"
+    TITLE="go_caixa" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="go_ItemMenu::#pages#Item.xhtml"
     NAME="output3" PATH="/pages/Item.xhtml"
     TARGET="rules:#pages#Item.xhtml" TITLE="go_ItemMenu" model-entity="JSFProcessItemOutput"/>
@@ -55,4 +55,6 @@
  <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
   PATH="/pages/cartao.xhtml" SHAPE="494,596,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#caixa.xhtml" PATH="/pages/caixa.xhtml"
+  SHAPE="699,467,0,0" model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>
