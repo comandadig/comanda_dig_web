@@ -40,9 +40,9 @@
 					<p:outputLabel for="time" value="Caixa Aberto:"  rendered="#{caixaMB.caixaAberto}" style="width: 120px"/>
         			<p:calendar id="time" value="#{caixaMB.caixa.dtAbertura}"  pattern="MM/dd/yyyy HH:mm:ss" readonly="true" showOn="button" style="width: 120px" rendered="#{caixaMB.caixaAberto}" />
 					<p:commandButton id="btn"  update="@form" process="@this" style="width: 120px" 
-					value="Abrir Caixa" icon="fa fa-edit" actionListener="#{caixaMB.abrirCaixa()}" ajax="true" rendered="#{!caixaMB.caixaAberto}"/>
+					value="Abrir Caixa" icon="fa fa-gears" actionListener="#{caixaMB.abrirCaixa()}" ajax="true" rendered="#{!caixaMB.caixaAberto}"/>
 					<p:commandButton id="btnFechar"  update="@form" process="@this" style="width: 120px"
-					value="Fechar Caixa" icon="fa fa-edit" actionListener="#{caixaMB.fecharCaixa()}" ajax="true" rendered="#{caixaMB.caixaAberto}"/>
+					value="Fechar Caixa" icon="fa fa-gears" actionListener="#{caixaMB.fecharCaixa()}" ajax="true" rendered="#{caixaMB.caixaAberto}"/>
 					
 				</h:panelGrid>
 				</p:panel>
