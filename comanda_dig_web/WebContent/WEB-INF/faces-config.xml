@@ -13,7 +13,7 @@
   </navigation-case>
  </navigation-rule>
  <navigation-rule>
- <from-view-id></from-view-id>
+  <from-view-id></from-view-id>
   <navigation-case>
    <from-outcome>go_userInit</from-outcome>
    <to-view-id>/pages/userInit.xhtml</to-view-id>
@@ -46,6 +46,10 @@
    <from-outcome>go_cartao</from-outcome>
    <to-view-id>/pages/cartao.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>go_pedido</from-outcome>
+   <to-view-id>/pages/pedido.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <referenced-bean>
   <referenced-bean-name>loginMB</referenced-bean-name>
@@ -70,6 +74,10 @@
  <referenced-bean>
   <referenced-bean-name>caixaMB</referenced-bean-name>
   <referenced-bean-class>managedbean.CaixaMB</referenced-bean-class>
+ </referenced-bean>
+ <referenced-bean>
+  <referenced-bean-name>pedidoMB</referenced-bean-name>
+  <referenced-bean-class>managedbean.PedidoMB</referenced-bean-class>
  </referenced-bean>
  <validator>
   <validator-id>custom.emailValidator</validator-id>

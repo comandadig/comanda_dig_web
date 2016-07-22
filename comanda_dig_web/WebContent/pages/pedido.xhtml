@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+		<script type="text/javascript">
+
+		jQuery(document).ready(function(){
+			 
+			
+			$('input[name="form:scanInput"]').keydown(function(e){
+		        if(e.which==17 || e.which==74 || e.which==13){
+		            e.preventDefault();
+		        }else{
+		            console.log(e.which);
+		        }
+		    })
+		});
+		
+ 	</script>
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				<center>          			
+  				
+				
+				<p:panel id="cadcat" header="Cadastro Cartaão Comanda" style="width: 95%;" >
+				
+				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
+					
+					<p:outputLabel  value="Usuário Logado:" style="width: 120px"/>
+        			
+        			<p:panelGrid columns="2" style="width:250px">
+				    <f:facet name="header">
+				        <p:graphicImage url="../fotos/usu_#{pedidoMB.user.idUser}.jpg"  width="80px" height="80px"/>
+				    </f:facet>
+				 
+				    <h:outputText value="Nome:" />
+				    <h:outputText value="#{pedidoMB.user.nome}" />
+				 
+				    <h:outputText value="Login:" />
+				    <h:outputText value="#{pedidoMB.user.login}" />
+				 	<f:facet name="footer">
+				 	<center>
+				 	<p:commandButton update=":form:matchGrid" value="Trocar de Usuário" icon="fa fa-users" oncomplete="PF('usuDialog').show()" title="Trocar User"/>
+	               	</center>
+	               	</f:facet>
+					</p:panelGrid>
+					
+					<h:inputHidden value="" />
+					
+				
+				
+				<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
+				
+				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
+				<p:inputText id="scanInput" value="#{pedidoMB.codigoComanda}" 
+						     maxlength="100" required="true" style="width:250px"
+						     onkeypress="if (event.keyCode == 13) {onchange(); return false; }" > 
+       						<f:ajax event="change"  listener="#{pedidoMB.consultaComanda()}" /> 
+       			</p:inputText>
+				
+				<p:commandButton icon="fa fa-search-plus" process="@this" update="@form" actionListener="#{pedidoMB.consultaComanda()}"/>
+				</h:panelGrid>
+				
+				
+				<h:panelGrid  columns="2" id="matchGrid3" cellpadding="1">
+					<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
+					<p:graphicImage url="../imagens/okLogo.jpg"  width="20px" height="20px" />
+				</h:panelGrid>
+					     
+				</h:panelGrid>		     
+				
+				<p:separator></p:separator>
+				
+			</p:panel>
+		</center>
+		
+</p:layoutUnit>	
+</p:layout>
+
+
+<p:dialog header="Users" widgetVar="usuDialog" modal="true" showEffect="fade" width="700px" hideEffect="fade" resizable="false">
+        	
+                <p:outputPanel id="display2">
+		
+					<p:dataTable id="dataTable" var="usu" value="#{userMB.usarioList}" 
+						paginator="true" rows="5">
+						<f:facet name="header">
+		           		 Usuários
+		        		</f:facet>
+		
+		
+					<p:column filterBy="#{usu.login}" headerText="Login"
+						footerText="contains" filterMatchMode="contains">
+						<p:outputLabel value="#{usu.login}" />
+					</p:column>
+		
+						
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="Nome" />
+						</f:facet>
+						<p:outputLabel value="#{usu.nome}" />
+					</p:column>
+		
+		
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="E-mail" />
+						</f:facet>
+						<p:outputLabel value="#{usu.email}" />
+					</p:column>
+		
+		
+					<p:column style="width:80px;text-align: center">
+						<f:facet name="header">
+							<p:outputLabel value="Super User" />
+						</f:facet>
+						<center>
+							<p:graphicImage url="../imagens/green-fa-check-circle.png"
+								width="20px" height="20px"  />
+						</center>
+					</p:column>
+		
+					<p:column style="width:80px;text-align: center">
+						<f:facet name="header">
+							<p:outputLabel value="Foto" />
+						</f:facet>
+						<center>
+							<p:graphicImage url="../fotos/usu_#{usu.idUser}.jpg" width="30px" height="30px" />
+								
+						</center>
+					</p:column>
+		
+					<p:column style="width:55px;text-align: center">
+						<f:facet name="header">
+							<p:outputLabel value="Editar" />
+						</f:facet>
+						<p:commandButton ajax="true" 
+							update="@form" process="@this"  icon="ui-icon-pencil" title="Editar">
+							<f:setPropertyActionListener value="#{usu}"
+								target="#{pedidoMB.user}" />
+						</p:commandButton>
+					</p:column>
+		
+				</p:dataTable>
+			</p:outputPanel>
+ 
+    </p:dialog>
+	
+</h:form>
+
+</html>

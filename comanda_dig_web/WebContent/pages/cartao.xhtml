@@ -14,7 +14,23 @@
 			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
 		</f:facet>
 		<ui:include src="../css/all_css.css" />
+		<script type="text/javascript">
+
+		jQuery(document).ready(function(){
+			 
+			
+			$('input[name="form:scanInput"]').keydown(function(e){
+		        if(e.which==17 || e.which==74 || e.which==13){
+		            e.preventDefault();
+		        }else{
+		            console.log(e.which);
+		        }
+		    })
+		});
+		
+ 	</script>
 	</h:head>
+	
 </f:view>
 
 
@@ -38,22 +54,16 @@
 					
 					<p:outputLabel  value="Numero Cod Comanda: " maxlength="100" />
 					
-					<p:inputText id="nomeId" value="#{cartaoComandaMB.cartaoComanda.codComanda}"
+					<p:inputText id="scanInput" value="#{cartaoComandaMB.cartaoComanda.codComanda}"
 						maxlength="100" required="true" style="width: 125px;" />
-					
-		
-					
-		
 		
 					<p:outputLabel for="sit"  value="Situação:" />
 		       
 			        <p:selectOneMenu id="sit" required="true" value="#{cartaoComandaMB.cartaoComanda.situacao}" style="width:125px">
-			            <f:selectItem itemLabel="Selecione:" itemValue="" />
 			            <f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
 			            <f:selectItem itemLabel="DESATIVADO" itemValue="DESATIVADO" />
 			            <f:selectItem itemLabel="ESTRAVIADO" itemValue="ESTRAVIADO" />
         			</p:selectOneMenu>
-					
 					
 					
 				</h:panelGrid>

@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import ejb.UserFacade;
 import model.User;
@@ -50,9 +49,6 @@ public class LoginMB  implements Serializable {
 		if (list != null && !list.isEmpty()){
 			this.usuario = list.get(0);
 			if (usuario.getSenha().equals(this.senha)){
-				FacesContext fc = FacesContext.getCurrentInstance();
-				HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-				session.setAttribute("user", usuario);
 				return "go_init";
 			} else {
 				String info = "Senha Inválida !";
