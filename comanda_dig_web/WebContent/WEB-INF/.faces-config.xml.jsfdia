@@ -44,15 +44,20 @@
    <PROCESS-ITEM-OUTPUT ID="go_ItemMenu::#pages#Item.xhtml"
     NAME="output4" PATH="/pages/Item.xhtml"
     TARGET="rules:#pages#Item.xhtml" TITLE="go_ItemMenu" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_itensCat::#pages#ItensCat.xhtml"
+    NAME="output5" PATH="/pages/ItensCat.xhtml"
+    TARGET="rules:#pages#ItensCat.xhtml" TITLE="go_itensCat" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="go_itensInit::#pages#itensInit.xhtml"
-    NAME="output5" PATH="/pages/itensInit.xhtml"
+    NAME="output6" PATH="/pages/itensInit.xhtml"
     TARGET="rules:#pages#itensInit.xhtml" TITLE="go_itensInit" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="go_cartao::#pages#cartao.xhtml"
-    NAME="output6" PATH="/pages/cartao.xhtml"
+    NAME="output7" PATH="/pages/cartao.xhtml"
     TARGET="rules:#pages#cartao.xhtml" TITLE="go_cartao" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="go_pedido::#pages#pedido.xhtml"
-    NAME="output7" PATH="/pages/pedido.xhtml"
-    TARGET="rules:#pages#pedido.xhtml" TITLE="go_pedido" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="go_aberturaComanda::#pages#aberturaComanda.xhtml" NAME="output8"
+    PATH="/pages/aberturaComanda.xhtml"
+    TARGET="rules:#pages#aberturaComanda.xhtml"
+    TITLE="go_aberturaComanda" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
@@ -61,5 +66,7 @@
  <PROCESS-ITEM NAME="rules:#pages#caixa.xhtml" PATH="/pages/caixa.xhtml"
   SHAPE="699,467,0,0" model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#pedido.xhtml"
-  PATH="/pages/pedido.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+  PATH="/pages/pedido.xhtml" SHAPE="304,688,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#aberturaComanda.xhtml"
+  PATH="/pages/aberturaComanda.xhtml" SHAPE="312,768,50,25" model-entity="JSFProcessGroup"/>
 </PROCESS>

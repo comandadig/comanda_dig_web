@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+		<script type="text/javascript">
+
+		jQuery(document).ready(function(){
+			 
+			
+			$('input[name="form:scanInput"]').keydown(function(e){
+		        if(e.which==17 || e.which==74 ){
+		            e.preventDefault();
+		        }else{
+		            console.log(e.which);
+		        }
+		    })
+		});
+		
+ 	</script>
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				<center>          			
+  				
+				
+				<p:panel id="cadcat" header="Abertura de Comanda" style="width: 95%;" >
+				
+				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
+					
+				
+				<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
+				
+				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
+				<p:inputText id="scanInput" value="#{comandaMB.codigoComanda}" 
+						     maxlength="100" required="true" style="width:250px"
+						     onkeypress="if (event.keyCode == 13) {onchange(); return false; }" > 
+       						<p:ajax update="@form"  event="change" process="@this" listener="#{comandaMB.consultaComanda()}" /> 
+       			</p:inputText>
+				
+				<p:commandButton icon="fa fa-search-plus" process="@this" update="@form" actionListener="#{comandaMB.consultaComanda()}"/>
+				</h:panelGrid>
+				
+				
+				<h:panelGrid  columns="2" id="matchGrid3" cellpadding="1" rendered="#{comandaMB.comandaDispo}">
+					<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
+					<p:graphicImage url="../imagens/okLogo.jpg"  width="20px" height="20px" />
+				</h:panelGrid>
+					     
+				</h:panelGrid>		     
+				
+				<h:panelGrid  columns="2" id="matchGrid2" cellpadding="5" rendered="#{comandaMB.comanda.caixa.cadastroCliente}">
+					<p:outputLabel value="Nome:"/>
+					<p:inputText value="#{comandaMB.comanda.nome}"/>
+					
+					<p:outputLabel value="Telefone:"/>
+					<p:inputMask mask="(99) 9999-99-99" value="#{comandaMB.comanda.telefone}"/>
+					
+					
+					<p:outputLabel value="Documento"/>
+					<p:inputMask value="#{comandaMB.comanda.nome}" mask="999.999.999-99" />
+										
+				</h:panelGrid>
+				
+				<h:panelGrid  columns="2" id="matchGrid5" cellpadding="5" rendered="#{comandaMB.comanda.caixa.cadastroCliente or comandaMB.comanda.caixa.entradaMasFem}">
+					<p:outputLabel value="Sexo:"/>
+					<p:selectOneRadio id="console" value="#{comandaMB.comanda.sexo}">
+            			<f:selectItem itemLabel="Masculino" itemValue="M" />
+            			<f:selectItem itemLabel="Feminino" itemValue="F" />
+        			</p:selectOneRadio>
+					
+				</h:panelGrid>
+				
+				<p:separator></p:separator>
+				
+				<center>
+					<p:commandButton value="Abrir Comanda" ajax="false" icon="ui-icon-check"
+						validateClient="true" update="@form" process="@all"
+						type="submit" actionListener="#{comandaMB.abrirComanda}" />
+					<p:commandButton value="Limpar" icon="ui-icon-close"  actionListener="#{comandaMB.ini()}"
+						update="@form" process="@this"
+						style="margin-right:20px;">
+						<p:resetInput target=":form:matchGrid5,:form:matchGrid4,:form:matchGrid3,:form:matchGrid2,:form:matchGrid,:form:messages,:form:growl" />
+					</p:commandButton>
+				</center>
+					
+			</p:panel>
+		</center>
+		
+</p:layoutUnit>	
+</p:layout>
+
+
+	
+</h:form>
+
+</html>

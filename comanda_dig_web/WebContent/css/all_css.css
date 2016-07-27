@@ -13,5 +13,8 @@
 	border: 2px;
 }
 
+.semBorda tr, .semBorda td {
+	border: none !important;
+}
 
 </style>

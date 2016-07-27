@@ -14,6 +14,7 @@
 			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
 		</f:facet>
 		<ui:include src="../css/all_css.css" />
+		
 	</h:head>
 </f:view>
 
@@ -35,34 +36,86 @@
 				
 				<p:panel id="cadcat" header="Cadastro Cartaão Comanda" style="width: 95%;" >
 				<p:panel style="width: 50%;">
-				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
+				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5" rendered="#{caixaMB.caixaAberto}">
 					
 					<p:outputLabel for="time" value="Caixa Aberto:"  rendered="#{caixaMB.caixaAberto}" style="width: 120px"/>
         			<p:calendar id="time" value="#{caixaMB.caixa.dtAbertura}"  pattern="MM/dd/yyyy HH:mm:ss" readonly="true" showOn="button" style="width: 120px" rendered="#{caixaMB.caixaAberto}" />
-					<p:commandButton id="btn"  update="@form" process="@this" style="width: 120px" 
-					value="Abrir Caixa" icon="fa fa-gears" actionListener="#{caixaMB.abrirCaixa()}" ajax="true" rendered="#{!caixaMB.caixaAberto}"/>
 					<p:commandButton id="btnFechar"  update="@form" process="@this" style="width: 120px"
 					value="Fechar Caixa" icon="fa fa-gears" actionListener="#{caixaMB.fecharCaixa()}" ajax="true" rendered="#{caixaMB.caixaAberto}"/>
+				</h:panelGrid>
+				
+				
+				<h:panelGrid columns="1" id="matchGrid5" cellpadding="5" rendered="#{!caixaMB.caixaAberto}" >
+					<h:panelGroup>
+					<p:commandButton id="btn"   update="@form" process="@this"  style="width: 320px"
+					value="Abrir Caixa" icon="fa fa-gears" actionListener="#{caixaMB.abrirCaixa()}" ajax="true" rendered="#{!caixaMB.caixaAberto}">
+					<p:confirm header="Confirmação" message="Você Tem certeza (Abertura Caixa)?" icon="ui-icon-alert" />
+					</p:commandButton>
+					</h:panelGroup>
 					
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" rendered="#{!caixaMB.caixaAberto}">
+        			<h:outputText value="Dados de Cliente na Comanda: " />
+        			<p:selectBooleanButton id="value2" value="#{caixaMB.caixa.cadastroCliente}"  onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
+        			<p:ajax update="@form" listener="#{caixaMB.teste()}" />
+        			</p:selectBooleanButton>
+        			
+        			<h:outputText value="Cobrar Conver: " />
+        			<p:selectBooleanButton id="value3" value="#{caixaMB.caixa.conver}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
+        			 	<p:ajax update="@form"  />
+        			 </p:selectBooleanButton>
+        			 
+        			<h:outputText value="Valor Conver: " rendered="#{caixaMB.caixa.conver}"/>
+           			<pe:inputNumber id="Input1"  value="#{caixaMB.caixa.valorConver}" rendered="#{caixaMB.caixa.conver}" >  
+                	<p:ajax event="blur" update=":form:Input1" />  
+            		</pe:inputNumber> 
+            		
+            		
+            		<h:outputText value="Cobrar Entrada Mas/Fem: " />
+        			<p:selectBooleanButton id="value4" value="#{caixaMB.caixa.entradaMasFem}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
+        			 	<p:ajax update="@form"  />
+        			 </p:selectBooleanButton>
+            		
+            		<h:outputText value="Valor Entrada Mas.: " rendered="#{caixaMB.caixa.entradaMasFem}"/>
+           			<pe:inputNumber id="Input2"  value="#{caixaMB.caixa.valorEntradaMas}" rendered="#{caixaMB.caixa.entradaMasFem}" >  
+                	<p:ajax event="blur" update=":form:Input2" />  
+            		</pe:inputNumber> 
+            		
+            		<h:outputText value="Valor Entrada Fem.: " rendered="#{caixaMB.caixa.entradaMasFem}"/>
+           			<pe:inputNumber id="Input3"  value="#{caixaMB.caixa.valorEntradaFem}" rendered="#{caixaMB.caixa.entradaMasFem}" >  
+                	<p:ajax event="blur" update=":form:Input3" />  
+            		</pe:inputNumber> 
+            		
+            		<h:outputText value="Cobrar Entrada Unica: " />
+        			<p:selectBooleanButton id="value5" value="#{caixaMB.caixa.entrada}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
+        			 	<p:ajax update="@form"  />
+        			 </p:selectBooleanButton>
+        			 
+        			<h:outputText value="Valor Entrada: " rendered="#{caixaMB.caixa.entrada}"/>
+           			<pe:inputNumber id="Input4"  value="#{caixaMB.caixa.valorEntrada}" rendered="#{caixaMB.caixa.entrada}" >  
+                	<p:ajax event="blur" update=":form:Input4" />  
+            		</pe:inputNumber>
+            		
+    				</h:panelGrid>
 				</h:panelGrid>
 				</p:panel>
-				<p:separator></p:separator>
 				
+				<p:spacer width="30px" > </p:spacer>
 				<p:accordionPanel rendered="#{caixaMB.caixaAberto}">
         		<p:tab title="Comandas">
-	            	<h:panelGrid columns="2" cellpadding="10">
+            	
+            	<p:panelGrid columns="3"  cellpadding="10">
 		               
 		               <p:dataGrid var="comand" value="#{caixaMB.comandasDisponiveis}" columns="3" layout="grid"
 						        rows="12" paginator="true" id="cars"
 						        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						        rowsPerPageTemplate="6,12,16">
+						        rowsPerPageTemplate="6,12,16" style="width:300px;height:400px">
  
 					        <f:facet name="header">
 					            Comandas Disponoveis
 					        </f:facet>
 					 
 					       <p:panel header="#{comand.cartaoComanda.codComanda}" style="text-align:center">
-				            <h:panelGrid columns="1" style="width:100%">
+				            <h:panelGrid columns="1" style="width:100%"> 
 				                <p:graphicImage url="../imagens/barcode-icon.jpg"  width="40px" height="40px" />
 				 
 				                <h:outputText value="#{comand.cartaoComanda.codComanda}" />
@@ -74,7 +127,71 @@
 				            </h:panelGrid>
 				        </p:panel>
     					</p:dataGrid>
-	            	</h:panelGrid>
+    					
+    					
+    				<p:dataTable id="dataTable" var="com" value="#{caixaMB.comandasAbertas}" style="width:300px;height:400px"
+						paginator="true" rows="5">
+						<f:facet name="header">
+		           		 Comandas Abertas
+		        		</f:facet>
+					
+					<p:column width="10%">
+						<p:graphicImage url="../imagens/barcode-icon.jpg"  width="20px" height="20px" />	
+					</p:column>
+					
+					<p:column filterBy="#{com.cartaoComanda.codComanda}" headerText="Cód. Cartão Comanda"
+						footerText="contains" filterMatchMode="contains">
+						<p:outputLabel value="#{com.cartaoComanda.codComanda}" />
+					</p:column>
+		
+						
+					
+					<p:column style="width:55px;text-align: center">
+						<f:facet name="header">
+							<p:outputLabel value="Visualizar" />
+						</f:facet>
+						<p:commandButton ajax="true" 
+							update="@form" process="@this"  icon="ui-icon-search" title="Visualizar">
+							<f:setPropertyActionListener value="#{usu}"
+								target="#{pedidoMB.user}" />
+						</p:commandButton>
+					</p:column>
+		
+				</p:dataTable>
+
+
+				<p:dataTable id="dataTable2" var="com" value="#{caixaMB.comandasFechadas}" style="width:300px;height:400px"
+						paginator="true" rows="5">
+						<f:facet name="header">
+		           		 Comandas Abertas
+		        		</f:facet>
+					
+					<p:column width="10%">
+						<p:graphicImage url="../imagens/barcode-icon.jpg"  width="20px" height="20px" />	
+					</p:column>
+					
+					<p:column filterBy="#{com.cartaoComanda.codComanda}" headerText="Cód. Cartão Comanda"
+						footerText="contains" filterMatchMode="contains">
+						<p:outputLabel value="#{com.cartaoComanda.codComanda}" />
+					</p:column>
+		
+						
+					
+					<p:column style="width:55px;text-align: center">
+						<f:facet name="header">
+							<p:outputLabel value="Visualizar" />
+						</f:facet>
+						<p:commandButton ajax="true" 
+							update="@form" process="@this"  icon="ui-icon-search" title="Visualizar">
+							<f:setPropertyActionListener value="#{usu}"
+								target="#{pedidoMB.user}" />
+						</p:commandButton>
+					</p:column>
+		
+				</p:dataTable>
+    					
+    					
+	          	</p:panelGrid>
         		</p:tab>
         		</p:accordionPanel>
 			</p:panel>
@@ -103,7 +220,13 @@
         </p:outputPanel>
     </p:dialog>
 
-	
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	<center>
+        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    </center>   
+    </p:confirmDialog>
+
 </h:form>
 
 </html>

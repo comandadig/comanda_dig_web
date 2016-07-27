@@ -50,6 +50,10 @@
    <from-outcome>go_pedido</from-outcome>
    <to-view-id>/pages/pedido.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>go_aberturaComanda</from-outcome>
+   <to-view-id>/pages/aberturaComanda.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <referenced-bean>
   <referenced-bean-name>loginMB</referenced-bean-name>
@@ -78,6 +82,10 @@
  <referenced-bean>
   <referenced-bean-name>pedidoMB</referenced-bean-name>
   <referenced-bean-class>managedbean.PedidoMB</referenced-bean-class>
+ </referenced-bean>
+ <referenced-bean>
+  <referenced-bean-name>comandaMB</referenced-bean-name>
+  <referenced-bean-class>managedbean.ComandaMB</referenced-bean-class>
  </referenced-bean>
  <validator>
   <validator-id>custom.emailValidator</validator-id>
