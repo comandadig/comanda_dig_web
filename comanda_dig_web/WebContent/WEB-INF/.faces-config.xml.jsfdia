@@ -53,11 +53,17 @@
    <PROCESS-ITEM-OUTPUT ID="go_cartao::#pages#cartao.xhtml"
     NAME="output7" PATH="/pages/cartao.xhtml"
     TARGET="rules:#pages#cartao.xhtml" TITLE="go_cartao" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_pedido::#pages#pedido.xhtml"
+    NAME="output8" PATH="/pages/pedido.xhtml"
+    TARGET="rules:#pages#pedido.xhtml" TITLE="go_pedido" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
-    ID="go_aberturaComanda::#pages#aberturaComanda.xhtml" NAME="output8"
+    ID="go_aberturaComanda::#pages#aberturaComanda.xhtml" NAME="output9"
     PATH="/pages/aberturaComanda.xhtml"
     TARGET="rules:#pages#aberturaComanda.xhtml"
     TITLE="go_aberturaComanda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="go_cat_master::#pages#categoriaMaster.xhtml"
+    NAME="output10" PATH="/pages/categoriaMaster.xhtml"
+    TARGET="rules:#pages#categoriaMaster.xhtml" TITLE="go_cat_master" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
@@ -69,4 +75,6 @@
   PATH="/pages/pedido.xhtml" SHAPE="304,688,50,25" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#aberturaComanda.xhtml"
   PATH="/pages/aberturaComanda.xhtml" SHAPE="312,768,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#categoriaMaster.xhtml"
+  PATH="/pages/categoriaMaster.xhtml" SHAPE="304,913,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

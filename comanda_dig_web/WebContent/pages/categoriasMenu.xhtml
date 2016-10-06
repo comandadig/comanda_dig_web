@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+<h:form id="form">
+<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+
+			<p:layoutUnit  position="center">
+				
+				
+				<center>          			
+  				<p:tabMenu activeIndex="1" style="width: 95%;">  
+		        <p:menuitem value="Categoria Master" ajax="false" action="go_cat_master" immediate="true"   />  
+		        <p:menuitem value="Categorias" ajax="false" 	action="/pages/categoriasMenu.xhtml" immediate="true"  />
+    			</p:tabMenu>
+				
+				
+				
+				<p:panel id="cadcat" header="Categorias Menu" style="width: 95%;" >
+				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+		
+				<p:outputLabel for="catId" value="Categoria: "  />
+					<p:selectOneMenu style="width:160px"  filter="true" filterMatchMode="startsWith" id="catId"  value="#{menuCategoriaMB.selectIdCategoria}" effect="fold">
+				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
+				         <f:selectItems value="#{menuCategoriaMB.selectItemsCategorias}" />
+				         <p:ajax event="change"  process="@this" update="@form"  listener="#{menuCategoriaMB.selectCat()}"></p:ajax>
+					</p:selectOneMenu>	
+				</h:panelGrid>	
+			 	<p:pickList id="PojoPickList" value="#{menuCategoriaMB.dualListModel}" var="item" effect="bounce"
+                itemValue="#{item}" itemLabel="#{item.nome}" showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="itemConverter">
+ 
+			        
+			        <f:facet name="targetCaption">#{menuCategoriaMB.selectcategoriaMenu.nome}</f:facet>
+			        <f:facet name="sourceCaption">Itens Disponíveis</f:facet>
+			 				        				 
+			        <p:column style="width:10%">
+			            <p:graphicImage url="../fotos/cat_mas_#{item.idCategoriaMenu}.jpg" width="30px"
+						height="30px" />
+			        </p:column>
+			 
+			        <p:column style="width:90%;">
+			            <h:outputText value="#{item.nome}" />
+			        </p:column>
+   			 	</p:pickList>
+					
+				
+				<p:separator></p:separator>
+		
+				<center>
+					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
+						validateClient="true" update=":form:matchGrid" process="@all"
+						type="submit" actionListener="#{menuCategoriaMB.salvar}" />
+					<p:commandButton value="Limpar" icon="ui-icon-close" actionListener="#{menuCategoriaMB.ini()}"
+						update="@form" process="@this"
+						style="margin-right:20px;">
+						<p:resetInput target=":form:matchGrid,:form:messages,:form:growl" />
+					</p:commandButton>
+				</center>
+		
+		
+			</p:panel>
+		
+			<p:spacer height="50" />
+		
+		</center>
+		
+		
+            
+</p:layoutUnit>	
+</p:layout>	
+</h:form>
+
+</html>

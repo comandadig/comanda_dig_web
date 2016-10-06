@@ -15,6 +15,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import model.CategoriaMaster;
 import model.CategoriaMenu;
 import model.ItemMenu;
 import model.User;
@@ -30,6 +31,7 @@ public class FotoUtil implements ServletContextListener{
 	private static final String PASTA_DEFAULT_FOTOS = "/fotos";
 	private static final String TIPE_USU = "usu_";
 	private static final String TIPE_CATEGORIA = "cat_";
+	private static final String TIPE_CATEGORIA_MASTER = "cat_mas_";
 	private static final String TIPE_ITEM = "item_";
 	private static final String EXTENCAO = ".jpg";
 
@@ -98,6 +100,17 @@ public class FotoUtil implements ServletContextListener{
 		}
 	}
 
+	public static void criarAtualizarFoto(CategoriaMaster categoriaMenu) {
+		if (categoriaMenu != null && categoriaMenu.getIdCategoriaMaster() != null){
+			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA_MASTER + categoriaMenu.getIdCategoriaMaster()+EXTENCAO;
+			if (categoriaMenu.getFoto() != null){
+				criaArquivo(categoriaMenu.getFoto(), arquivo);
+			} else {
+				criaArquivo(getFotoDefault(TIPE_CATEGORIA_MASTER),arquivo);
+			}
+		}
+	}
+	
 	public static void criarAtualizarFoto(User user){
 		if (user != null && user.getIdUser() != null){
 			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_USU + user.getIdUser()+EXTENCAO;
@@ -141,6 +154,8 @@ public class FotoUtil implements ServletContextListener{
 				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
 			} else if (tipo.equals(FotoUtil.TIPE_ITEM)){
 				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
+			} else if (tipo.equals(FotoUtil.TIPE_CATEGORIA_MASTER)) {
+				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
 			}
 			
 			imagem = ImageIO.read(new File(arquivo));
@@ -168,6 +183,7 @@ public class FotoUtil implements ServletContextListener{
 		if (object instanceof User) return  PASTA_DEFAULT_FOTOS + "/"+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
 		else if (object instanceof CategoriaMenu) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((CategoriaMenu)object).getIdCategoriaMenu()+EXTENCAO;
 		else if (object instanceof ItemMenu) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_ITEM + ((ItemMenu)object).getIdItemMenu()+EXTENCAO;
+		else if (object instanceof CategoriaMaster) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_CATEGORIA_MASTER + ((CategoriaMaster)object).getIdCategoriaMaster()+EXTENCAO;
 		return null;
 	}
 
