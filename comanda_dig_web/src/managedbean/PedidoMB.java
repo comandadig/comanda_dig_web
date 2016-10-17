@@ -12,9 +12,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import ejb.CategoriaItensMenuFacade;
+import ejb.ProdutoFacade;
 import ejb.PedidoFacade;
-import model.CategoriaMenu;
+import model.Categoria;
 import model.Comanda;
 import model.Produto;
 import model.User;
@@ -31,7 +31,7 @@ public class PedidoMB  implements Serializable {
 	@EJB
 	private PedidoFacade pedidoFacade;
 	@EJB
-	private CategoriaItensMenuFacade itensFacade;
+	private ProdutoFacade itensFacade;
 	
 	@ManagedProperty("#{loginMB}")
     private LoginMB sessionBean;
@@ -40,7 +40,7 @@ public class PedidoMB  implements Serializable {
 	private List<Produto> itensList = new ArrayList<Produto>();
 	private Boolean comandaDispo = false;
 	private Comanda comanda = new Comanda();
-	private List<CategoriaMenu> categoriaMenus = new ArrayList<CategoriaMenu>();
+	private List<Categoria> categorias = new ArrayList<Categoria>();
 	private ArrayList<String> categoriasString = new ArrayList<String>();
 	private Produto itemMenuSelect = new  Produto();
 	private Produto descitemMenuSelect = new  Produto();
@@ -48,23 +48,19 @@ public class PedidoMB  implements Serializable {
 	private String desc = "";
 
 	
-	public PedidoMB() {
-		
-	}
-	
 	
 	
 	@PostConstruct
 	public void ini(){
 		user = sessionBean.getUsuario();
 		codigoComanda = "";
-		itensList = itensFacade.findAllItem();
+		itensList = itensFacade.findAllProduto();
 		comandaDispo = false;
 		categoriasString = new ArrayList<String>();
-		categoriaMenus = itensFacade.findAllCategoria();
-		if (categoriaMenus != null && !categoriaMenus.isEmpty()){
-			for (CategoriaMenu categoriaMenu : categoriaMenus) {
-				categoriasString.add(categoriaMenu.getNome());
+		categorias = itensFacade.findAllCategoria();
+		if (categorias != null && !categorias.isEmpty()){
+			for (Categoria categoria : categorias) {
+				categoriasString.add(categoria.getNome());
 			}
 		}
 		itemMenuSelect = new  Produto();
@@ -152,13 +148,13 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public CategoriaItensMenuFacade getItensFacade() {
+	public ProdutoFacade getItensFacade() {
 		return itensFacade;
 	}
 
 
 
-	public void setItensFacade(CategoriaItensMenuFacade itensFacade) {
+	public void setItensFacade(ProdutoFacade itensFacade) {
 		this.itensFacade = itensFacade;
 	}
 
@@ -204,14 +200,14 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public List<CategoriaMenu> getCategoriaMenus() {
-		return categoriaMenus;
+	public List<Categoria> getCategoriaMenus() {
+		return categorias;
 	}
 
 
 
-	public void setCategoriaMenus(List<CategoriaMenu> categoriaMenus) {
-		this.categoriaMenus = categoriaMenus;
+	public void setCategoriaMenus(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 

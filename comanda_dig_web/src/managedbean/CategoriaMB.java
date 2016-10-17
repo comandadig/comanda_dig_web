@@ -11,12 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import model.CategoriaMenu;
+import model.Categoria;
 
 import org.primefaces.event.FileUploadEvent;
 
 import util.FotoUtil;
-import ejb.CategoriaItensMenuFacade;
+import ejb.ProdutoFacade;
 
 
 
@@ -27,47 +27,38 @@ public class CategoriaMB  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private CategoriaItensMenuFacade categoriaItensMenuFacade;
-	private CategoriaMenu categoriaMenu = new CategoriaMenu();
-	private List<CategoriaMenu> categoriaList = new ArrayList<CategoriaMenu>();
+	private ProdutoFacade produtoFacade;
+	private Categoria categoria = new Categoria();
+	private List<Categoria> categoriaList = new ArrayList<Categoria>();
 	
-	
-	
-	public CategoriaMB() {
-
-	}
-
 	
 	@PostConstruct
 	public void ini(){
-		this.categoriaMenu = new CategoriaMenu();
-		this.categoriaList = categoriaItensMenuFacade.findAllCategoria();
+		this.categoria = new Categoria();
+		this.categoriaList = produtoFacade.findAllCategoria();
 	}
 
 	
 	public void salvar(){
-		
-		if(this.getCategoriaMenu().getIdCategoriaMenu() != null){
+		if(this.getCategoria().getIdCategoria() != null){
 			try{
-				CategoriaMenu categoriaMenuPersist = this.categoriaItensMenuFacade.findCategoria(this.categoriaMenu.getIdCategoriaMenu());
-				categoriaMenuPersist.setDescontoCat(this.getCategoriaMenu().getDescontoCat());
-				categoriaMenuPersist.setDescricao(this.getCategoriaMenu().getDescricao());
-				categoriaMenuPersist.setFoto(this.getCategoriaMenu().getFoto());
-				categoriaMenuPersist.setNome(this.getCategoriaMenu().getNome());
-				categoriaMenuPersist.setDirfoto(FotoUtil.getDiFoto(categoriaMenu));
-				this.categoriaMenu = this.categoriaItensMenuFacade.updateCategoria(this.categoriaMenu);
+				Categoria categoriaPersist = this.produtoFacade.findCategoria(this.categoria.getIdCategoria());
+				categoriaPersist.setDesconto(this.getCategoria().getDesconto());
+				categoriaPersist.setDescricao(this.getCategoria().getDescricao());
+				categoriaPersist.setFoto(this.getCategoria().getFoto());
+				categoriaPersist.setNome(this.getCategoria().getNome());
+				categoriaPersist.setDirfoto(FotoUtil.getDiFoto(categoria));
+				this.categoria = this.produtoFacade.updateCategoria(this.categoria);
 				String info = "Categoria alterada com Sucesso ";
-				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoriaMenu.getNome() + info , null));
+				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoria.getNome() + info , null));
 			}catch (Exception e){
 				String info = e.getMessage();
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_FATAL, info , null));
 				return;
 			}
-			
-			
 		} else {
 			try{
-				this.categoriaItensMenuFacade.saveCategoria(this.categoriaMenu);
+				this.produtoFacade.saveCategoria(this.categoria);
 				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
@@ -75,58 +66,64 @@ public class CategoriaMB  implements Serializable {
 				return;
 			}
 			String info = "Categoria Cadastrada com Sucesso ";
-			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoriaMenu.getNome() + info , null));
+			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoria.getNome() + info , null));
 		}
 		
-		FotoUtil.criarAtualizarFoto(this.categoriaMenu);
+		FotoUtil.criarAtualizarFoto(this.categoria);
 		this.ini();
 	}
 
 	
 	 private void atualizaDirFoto() {
-		 if (this.categoriaMenu != null && this.categoriaMenu.getIdCategoriaMenu() != null){
-			 categoriaMenu.setDirfoto(FotoUtil.getDiFoto(categoriaMenu));
-			 categoriaMenu = categoriaItensMenuFacade.updateCategoria(categoriaMenu);
+		 if (this.categoria != null && this.categoria.getIdCategoria() != null){
+			 categoria.setDirfoto(FotoUtil.getDiFoto(categoria));
+			 categoria = produtoFacade.updateCategoria(categoria);
 		 }
 	}
 
 
 	public void handleFileUpload(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        this.categoriaMenu.setFoto(event.getFile().getContents());
+        this.categoria.setFoto(event.getFile().getContents());
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-	
-	
-	public CategoriaItensMenuFacade getCategoriaItensMenuFacade() {
-		return categoriaItensMenuFacade;
+
+
+	public ProdutoFacade getProdutoFacade() {
+		return produtoFacade;
 	}
 
 
-	public void setCategoriaItensMenuFacade(
-			CategoriaItensMenuFacade categoriaItensMenuFacade) {
-		this.categoriaItensMenuFacade = categoriaItensMenuFacade;
+	public void setProdutoFacade(ProdutoFacade produtoFacade) {
+		this.produtoFacade = produtoFacade;
 	}
 
 
-	public CategoriaMenu getCategoriaMenu() {
-		return categoriaMenu;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
 
-	public void setCategoriaMenu(CategoriaMenu categoriaMenu) {
-		this.categoriaMenu = categoriaMenu;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 
-	public List<CategoriaMenu> getCategoriaList() {
+	public List<Categoria> getCategoriaList() {
 		return categoriaList;
 	}
 
 
-	public void setCategoriaList(List<CategoriaMenu> categoriaList) {
+	public void setCategoriaList(List<Categoria> categoriaList) {
 		this.categoriaList = categoriaList;
 	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 	
 	
 	

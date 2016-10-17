@@ -32,16 +32,16 @@
 
 				<center>          			
   				<p:tabMenu activeIndex="0" style="width: 95%;">  
-		        <p:menuitem value="Categorias Menu" ajax="false" action="go_catMenu" immediate="true"   />  
-		        <p:menuitem value="Itens Menu" ajax="false" 	action="go_ItemMenu" immediate="true"  />
-		        <p:menuitem value="Itens por Categoria" ajax="false" 	action="go_itensCat" immediate="true"  />  
+		         <p:menuitem value="Categorias" ajax="false" action="/pages/categoria_cadastro.xhtml" immediate="true"   />  
+		        <p:menuitem value="Produtos" ajax="false" 	action="/pages/produto_cadastro.xhtml" immediate="true"  />
+		        <p:menuitem value="Categorias/Produtos" ajax="false" 	action="go_itensCat" immediate="true"  />  
     			</p:tabMenu>
 				
 				<p:panel id="cadcat" header="Cadastro Categorias" style="width: 95%;" >
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 					
 					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
-					<p:inputText id="nomeId" value="#{categoriaMB.categoriaMenu.nome}"
+					<p:inputText id="nomeId" value="#{categoriaMB.categoria.nome}"
 						maxlength="100" required="true" style="width: 500px;" />
 					
 		
@@ -54,14 +54,14 @@
 					<p:outputLabel  value="Desconto por Categoria:"/>
 		       
 			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
-	       				<p:outputLabel id="output" value="Valor Percentual #{categoriaMB.categoriaMenu.descontoCat} %"  style="width:150px" />
-	        			<h:inputHidden id="txt2" value="#{categoriaMB.categoriaMenu.descontoCat}" />
+	       				<p:outputLabel id="output" value="Valor Percentual #{categoriaMB.categoria.desconto} %"  style="width:150px" />
+	        			<h:inputHidden id="txt2" value="#{categoriaMB.categoria.desconto}" />
 	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
 	    			</h:panelGrid>
 					
 					<p:outputLabel  value="Descrição da Categoria:"/>
 					<h:panelGrid columns="1" style="margin-bottom: 10px" >
-						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{categoriaMB.categoriaMenu.descricao}" counterTemplate="{0} characters remaining." autoResize="false" />
+						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{categoriaMB.categoria.descricao}" counterTemplate="{0} characters remaining." autoResize="false" />
     					<h:outputText id="display" />
 					</h:panelGrid>
 					
@@ -113,7 +113,7 @@
 				<f:facet name="header">
 					<p:outputLabel value="Perct. Desconto" />
 				</f:facet>
-				<p:outputLabel value="#{cat.descontoCat}" />
+				<p:outputLabel value="#{cat.desconto}" />
 			</p:column>
 			
 			<p:column style="width:80px;text-align: center">
@@ -121,7 +121,7 @@
 					<p:outputLabel value="Foto" />
 				</f:facet>
 				<center>
-					<p:graphicImage  url="../fotos/cat_#{cat.idCategoriaMenu}.jpg" width="60px"
+					<p:graphicImage  url="../fotos/cat_#{cat.idCategoria}.jpg" width="60px"
 						height="60px" />
 				</center>
 			</p:column>
@@ -133,7 +133,7 @@
 				<p:commandButton ajax="true" 
 					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar">
 					<f:setPropertyActionListener value="#{cat}"
-						target="#{categoriaMB.categoriaMenu}" />
+						target="#{categoriaMB.categoria}" />
 				</p:commandButton>
 			</p:column>
         		

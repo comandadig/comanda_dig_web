@@ -10,11 +10,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 
-import ejb.CategoriaItensMenuFacade;
+import ejb.ProdutoFacade;
 import model.CategoriaMaster;
 import util.FotoUtil;
 
@@ -27,7 +26,7 @@ public class CategoriaMasterMB  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private CategoriaItensMenuFacade categoriaItensMenuFacade;
+	private ProdutoFacade produtoFacade;
 	private CategoriaMaster categoriaMaster = new CategoriaMaster();
 	private List<CategoriaMaster> categoriaList = new ArrayList<CategoriaMaster>();
 	
@@ -36,7 +35,7 @@ public class CategoriaMasterMB  implements Serializable {
 	@PostConstruct
 	public void ini(){
 		this.categoriaMaster = new CategoriaMaster();
-		this.categoriaList = categoriaItensMenuFacade.findAllCategoriaMaster();
+		this.categoriaList = produtoFacade.findAllCategoriaMaster();
 	}
 
 	
@@ -44,7 +43,7 @@ public class CategoriaMasterMB  implements Serializable {
 		
 		if(this.categoriaMaster.getIdCategoriaMaster() != null){
 			try{
-				categoriaMaster = categoriaItensMenuFacade.updateCategoriaMaster(categoriaMaster);
+				categoriaMaster = produtoFacade.updateCategoriaMaster(categoriaMaster);
 				String info = "Categoria alterada com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,categoriaMaster.getNome() + info , null));
 			}catch (Exception e){
@@ -56,7 +55,7 @@ public class CategoriaMasterMB  implements Serializable {
 			
 		} else {
 			try{
-				this.categoriaItensMenuFacade.saveCategoriaMaster(this.categoriaMaster);
+				this.produtoFacade.saveCategoriaMaster(this.categoriaMaster);
 				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
@@ -75,7 +74,7 @@ public class CategoriaMasterMB  implements Serializable {
 	 private void atualizaDirFoto() {
 		if (this.categoriaMaster != null && this.categoriaMaster.getIdCategoriaMaster() != null){
 			categoriaMaster.setDirfoto(FotoUtil.getDiFoto(categoriaMaster));
-			categoriaMaster = categoriaItensMenuFacade.updateCategoriaMaster(categoriaMaster);
+			categoriaMaster = produtoFacade.updateCategoriaMaster(categoriaMaster);
 		 }
 	}
 
@@ -87,14 +86,14 @@ public class CategoriaMasterMB  implements Serializable {
     }
 	
 	
-	public CategoriaItensMenuFacade getCategoriaItensMenuFacade() {
-		return categoriaItensMenuFacade;
+	public ProdutoFacade getCategoriaItensMenuFacade() {
+		return produtoFacade;
 	}
 
 
 	public void setCategoriaItensMenuFacade(
-			CategoriaItensMenuFacade categoriaItensMenuFacade) {
-		this.categoriaItensMenuFacade = categoriaItensMenuFacade;
+			ProdutoFacade produtoFacade) {
+		this.produtoFacade = produtoFacade;
 	}
 
 

@@ -34,8 +34,8 @@
   				
 				<center>
 				<p:tabMenu activeIndex="1" style="width: 95%;">  
-		        <p:menuitem value="Categorias" ajax="false" action="go_catMenu" immediate="true"   />  
-		        <p:menuitem value="Produtos" ajax="false" 	action="go_produto" immediate="true"  />
+		        <p:menuitem value="Categorias" ajax="false" action="/pages/categoria_cadastro.xhtml" immediate="true"   />  
+		        <p:menuitem value="Produtos" ajax="false" 	action="/pages/produto_cadastro.xhtml" immediate="true"  />
 		        <p:menuitem value="Categorias/Produtos" ajax="false" 	action="go_itensCat" immediate="true"  />  
     			</p:tabMenu>
 				
@@ -126,7 +126,7 @@
 	                    <f:selectItems value="#{produtoMB.selectItensTable}" />
 	                </p:selectOneMenu>
 	            </f:facet>
-	            <p:outputLabel value="#{prod.categoriaMenu.nome}" />
+	            <p:outputLabel value="#{prod.categoria.nome}" />
         	</p:column>
 			
 			<p:column  headerText="Valor"  >

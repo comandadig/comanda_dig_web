@@ -37,7 +37,7 @@
 				<f:facet name="header">Menu
 				<p:outputPanel style="height:16px">
                 
-                <p:commandButton action="go_catMenu" ajax="false" immediate="true"  value="Add/Edit Menu"  style="float:left" icon="fa fa-user-plus" />
+                <p:commandButton action="/pages/categoria_cadastro.xhtml" ajax="false" immediate="true"  value="Add/Edit Menu"  style="float:left" icon="fa fa-user-plus" />
        
             	</p:outputPanel>
            		 
@@ -52,10 +52,8 @@
 				
 				<p:rowExpansion>
 				<center>
-				<p:dataTable  style="width: 50%;" id="dataTable2" var="item" widgetVar="usersTable" value="#{cat.itemMenuList}"
-				 rows="5">
+				<p:dataTable  style="width: 50%;" id="dataTable2" var="item" widgetVar="usersTable" value="#{cat.produtosList}"  rows="5">
 				
-        		
         	
         	<p:column  headerText="Item"  >
 				<p:outputLabel value="#{item.nome}" />

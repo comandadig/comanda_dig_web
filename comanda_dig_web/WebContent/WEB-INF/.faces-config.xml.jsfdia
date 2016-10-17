@@ -2,27 +2,37 @@
 <PROCESS model-entity="JSFProcess">
  <PROCESS-ITEM NAME="rules:#pages#init.xhtml" PATH="/pages/init.xhtml"
   SHAPE="216,112,50,25" model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#usuario_filtro.xhtml"
-  PATH="/pages/usuario_filtro.xhtml" SHAPE="152,280,50,25"
+ <PROCESS-ITEM NAME="rules:#pages#userInit.xhtml"
+  PATH="/pages/userInit.xhtml" SHAPE="152,280,50,25"
   model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#usuario_cadastro.xhtml"
-  PATH="/pages/usuario_cadastro.xhtml" SHAPE="350,289,0,0"
+ <PROCESS-ITEM NAME="rules:#pages#user.xhtml" PATH="/pages/user.xhtml"
+  SHAPE="350,289,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#categoria_cadastro.xhtml"
+  PATH="/pages/categoria_cadastro.xhtml" SHAPE="536,280,50,25"
   model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#categoria.xhtml"
-  PATH="/pages/categoria.xhtml" SHAPE="536,280,50,25"
-  model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#produto_cadastro.xhtml"
-  PATH="/pages/produto_cadastro.xhtml" SHAPE="800,272,50,25"
-  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#Item.xhtml" PATH="/pages/Item.xhtml"
+  SHAPE="800,272,50,25" model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#ItensCat.xhtml"
   PATH="/pages/ItensCat.xhtml" SHAPE="381,426,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#produto_filtro.xhtml"
-  PATH="/pages/produto_filtro.xhtml" SHAPE="232,512,50,25"
+ <PROCESS-ITEM NAME="rules:#pages#itensInit.xhtml"
+  PATH="/pages/itensInit.xhtml" SHAPE="232,512,50,25"
   model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
   PATH="/pages/cartao.xhtml" SHAPE="494,596,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#caixa.xhtml" PATH="/pages/caixa.xhtml"
   SHAPE="699,467,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#usuario_filtro.xhtml"
+  PATH="/pages/usuario_filtro.xhtml" SHAPE="152,280,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#usuario_cadastro.xhtml"
+  PATH="/pages/usuario_cadastro.xhtml" SHAPE="350,289,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#produto_cadastro.xhtml"
+  PATH="/pages/produto_cadastro.xhtml" SHAPE="800,272,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#pages#produto_filtro.xhtml"
+  PATH="/pages/produto_filtro.xhtml" SHAPE="232,512,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>

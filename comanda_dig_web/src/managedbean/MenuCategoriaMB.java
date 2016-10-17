@@ -15,8 +15,8 @@ import javax.faces.model.SelectItem;
 import org.primefaces.model.DualListModel;
 
 import model.CategoriaMaster;
-import model.CategoriaMenu;
-import ejb.CategoriaItensMenuFacade;
+import model.Categoria;
+import ejb.ProdutoFacade;
 
 
 
@@ -27,42 +27,38 @@ public class MenuCategoriaMB  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private CategoriaItensMenuFacade categoriaItensMenuFacade;
+	private ProdutoFacade produtoFacade;
 	
 	private String selectIdCategoria = "";
 	private List<SelectItem> selectItemsCategorias = new ArrayList<SelectItem>();
 	private List<CategoriaMaster> categoriaList = new ArrayList<CategoriaMaster>();
-	private DualListModel<CategoriaMenu> dualListModel = new DualListModel<CategoriaMenu>();
+	private DualListModel<Categoria> dualListModel = new DualListModel<Categoria>();
 	private CategoriaMaster selectcategoriaMenu = new CategoriaMaster();
 	
-	
-	public MenuCategoriaMB() {
-	}
-
 	
 	@PostConstruct
 	public void ini(){
 		selectIdCategoria = "";
 		selectItemsCategorias = new ArrayList<SelectItem>();
-		categoriaList = this.categoriaItensMenuFacade.findAllCategoriaMaster();
+		categoriaList = this.produtoFacade.findAllCategoriaMaster();
 		for (CategoriaMaster categoriaMenu : this.categoriaList) {
 			selectItemsCategorias.add(new SelectItem(categoriaMenu.getIdCategoriaMaster(), categoriaMenu.getNome()));
 		}
-		dualListModel.setSource(categoriaItensMenuFacade.findAllCategoria());
-		dualListModel.setTarget(new ArrayList<CategoriaMenu>());
+		dualListModel.setSource(produtoFacade.findAllCategoria());
+		dualListModel.setTarget(new ArrayList<Categoria>());
 		selectcategoriaMenu = new CategoriaMaster();
 	}
 
 	
 	public void selectCat(){
 		if (selectIdCategoria != null && !selectIdCategoria.equals("")){
-			CategoriaMaster cat = this.categoriaItensMenuFacade.findCategoriaMaster(new Long(this.selectIdCategoria));
+			CategoriaMaster cat = this.produtoFacade.findCategoriaMaster(new Long(this.selectIdCategoria));
 			this.selectcategoriaMenu = cat;
 			dualListModel.setTarget(cat.getCategoriaMenus());
 		}
-		List<CategoriaMenu> list = new ArrayList<CategoriaMenu>();
-		List<CategoriaMenu> listAll = this.categoriaItensMenuFacade.findAllCategoria(); 
-		for (CategoriaMenu itemMenu : listAll) {
+		List<Categoria> list = new ArrayList<Categoria>();
+		List<Categoria> listAll = this.produtoFacade.findAllCategoria(); 
+		for (Categoria itemMenu : listAll) {
 			if(itemMenu.getCategoriaMaster() == null || !itemMenu.getCategoriaMaster().getIdCategoriaMaster().toString().equals(this.getSelectIdCategoria())){
 				list.add(itemMenu);
 			}
@@ -73,19 +69,19 @@ public class MenuCategoriaMB  implements Serializable {
 	
 	public void salvar(){
 		if (selectIdCategoria != null && !selectIdCategoria.equals("")){
-			List<CategoriaMenu> list = dualListModel.getTarget();
-			CategoriaMaster categoriaMenu = this.categoriaItensMenuFacade.findCategoriaMaster(new Long(selectIdCategoria));
+			List<Categoria> list = dualListModel.getTarget();
+			CategoriaMaster categoriaMenu = this.produtoFacade.findCategoriaMaster(new Long(selectIdCategoria));
 			if (list!= null && !list.isEmpty()){
-				for (CategoriaMenu itemMenu : list) {
-					itemMenu = this.categoriaItensMenuFacade.findCategoria(itemMenu.getIdCategoriaMenu());
-					itemMenu.setCategoriaMaster(categoriaMenu);
+				for (Categoria categoria : list) {
+					categoria = this.produtoFacade.findCategoria(categoria.getIdCategoria());
+					categoria.setCategoriaMaster(categoriaMenu);
 				}
 			} else {
 				categoriaMenu.setCategoriaMenus(null);
 			}
 			categoriaMenu.setCategoriaMenus(list);
 			try{
-				this.categoriaItensMenuFacade.updateCategoriaMaster(categoriaMenu);
+				this.produtoFacade.updateCategoriaMaster(categoriaMenu);
 				String info = "Categoria: " + categoriaMenu.getNome()+ " alterada com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO, info , null));
 			}catch (Exception e){
@@ -97,14 +93,14 @@ public class MenuCategoriaMB  implements Serializable {
 		 this.ini();
 	}
 	
-	public CategoriaItensMenuFacade getCategoriaItensMenuFacade() {
-		return categoriaItensMenuFacade;
+	public ProdutoFacade getCategoriaItensMenuFacade() {
+		return produtoFacade;
 	}
 
 
 	public void setCategoriaItensMenuFacade(
-			CategoriaItensMenuFacade categoriaItensMenuFacade) {
-		this.categoriaItensMenuFacade = categoriaItensMenuFacade;
+			ProdutoFacade produtoFacade) {
+		this.produtoFacade = produtoFacade;
 	}
 
 
@@ -139,12 +135,12 @@ public class MenuCategoriaMB  implements Serializable {
 	}
 
 
-	public DualListModel<CategoriaMenu> getDualListModel() {
+	public DualListModel<Categoria> getDualListModel() {
 		return dualListModel;
 	}
 
 
-	public void setDualListModel(DualListModel<CategoriaMenu> dualListModel) {
+	public void setDualListModel(DualListModel<Categoria> dualListModel) {
 		this.dualListModel = dualListModel;
 	}
 

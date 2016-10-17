@@ -16,10 +16,10 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import model.CategoriaMaster;
-import model.CategoriaMenu;
+import model.Categoria;
 import model.Produto;
 import model.User;
-import ejb.CategoriaItensMenuFacade;
+import ejb.ProdutoFacade;
 import ejb.UserFacade;
 
 
@@ -38,7 +38,7 @@ public class FotoUtil implements ServletContextListener{
 	@EJB
 	private UserFacade userFacade;
 	@EJB
-	private CategoriaItensMenuFacade categoriaItensMenuFacade;
+	private ProdutoFacade produtoFacade;
 	
 	public static String CONTEXT_PATH_FOTOS = "C:\\comanda_dig\\imagens\\";
 	public static String CONTEXT_PATH_IMAGENS = "C:\\comanda_dig\\imagens\\";
@@ -59,12 +59,12 @@ public class FotoUtil implements ServletContextListener{
 				criarAtualizarFoto(user);
 			}
 			
-			List<CategoriaMenu> catList = this.categoriaItensMenuFacade.findAllCategoria();
-			for (CategoriaMenu categoriaMenu : catList) {
-				criarAtualizarFoto(categoriaMenu);
+			List<Categoria> catList = this.produtoFacade.findAllCategoria();
+			for (Categoria categoria : catList) {
+				criarAtualizarFoto(categoria);
 			}
 			
-			List<Produto> produtos = this.categoriaItensMenuFacade.findAllItem();
+			List<Produto> produtos = this.produtoFacade.findAllProduto();
 			for (Produto produto : produtos) {
 				criarAtualizarFoto(produto);
 			}
@@ -89,11 +89,11 @@ public class FotoUtil implements ServletContextListener{
 		}
 	}
 
-	public static void criarAtualizarFoto(CategoriaMenu categoriaMenu) {
-		if (categoriaMenu != null && categoriaMenu.getIdCategoriaMenu() != null){
-			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA + categoriaMenu.getIdCategoriaMenu()+EXTENCAO;
-			if (categoriaMenu.getFoto() != null){
-				criaArquivo(categoriaMenu.getFoto(), arquivo);
+	public static void criarAtualizarFoto(Categoria categoria) {
+		if (categoria != null && categoria.getIdCategoria() != null){
+			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA + categoria.getIdCategoria()+EXTENCAO;
+			if (categoria.getFoto() != null){
+				criaArquivo(categoria.getFoto(), arquivo);
 			} else {
 				criaArquivo(getFotoDefault(TIPE_CATEGORIA),arquivo);
 			}
@@ -181,7 +181,7 @@ public class FotoUtil implements ServletContextListener{
 	public static String getDiFoto(Object object){
 		
 		if (object instanceof User) return  PASTA_DEFAULT_FOTOS + "/"+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
-		else if (object instanceof CategoriaMenu) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((CategoriaMenu)object).getIdCategoriaMenu()+EXTENCAO;
+		else if (object instanceof Categoria) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((Categoria)object).getIdCategoria()+EXTENCAO;
 		else if (object instanceof Produto) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_PRODUTO + ((Produto)object).getIdProduto()+EXTENCAO;
 		else if (object instanceof CategoriaMaster) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_CATEGORIA_MASTER + ((CategoriaMaster)object).getIdCategoriaMaster()+EXTENCAO;
 		return null;

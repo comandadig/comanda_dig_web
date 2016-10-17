@@ -12,13 +12,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import model.CategoriaMenu;
+import model.Categoria;
 import model.Produto;
 
 import org.primefaces.event.FileUploadEvent;
 
 import util.FotoUtil;
-import ejb.CategoriaItensMenuFacade;
+import ejb.ProdutoFacade;
 
 
 
@@ -29,13 +29,13 @@ public class ProdutoMB  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private CategoriaItensMenuFacade categoriaItensMenuFacade;
+	private ProdutoFacade produtoFacade;
 	
 	private Produto produto = new Produto();
 	private List<Produto> produtoList = new ArrayList<Produto>();
 	
-	private List<CategoriaMenu> categoriaList = new ArrayList<CategoriaMenu>();
-	private CategoriaMenu categoriaMenu = new CategoriaMenu();
+	private List<Categoria> categoriaList = new ArrayList<Categoria>();
+	private Categoria categoria = new Categoria();
 	private String selectIdCategoria = "";
 	private List<SelectItem> selectItemsCategorias = new ArrayList<SelectItem>();
 	private List<String> selectItensTable = new ArrayList<String>();
@@ -48,8 +48,8 @@ public class ProdutoMB  implements Serializable {
 	@PostConstruct
 	public void ini(){
 		this.produto = new Produto();
-		this.produtoList = categoriaItensMenuFacade.findAllItem();
-		this.categoriaList = categoriaItensMenuFacade.findAllCategoria();
+		this.produtoList = produtoFacade.findAllProduto();
+		this.categoriaList = produtoFacade.findAllCategoria();
 		this.selectIdCategoria = "";
 		this.selectItemsCategorias = new ArrayList<SelectItem>();
 		this.selectItensTable = new ArrayList<String>();
@@ -58,9 +58,9 @@ public class ProdutoMB  implements Serializable {
 
 	
 	private void carregaCategorias(){
-		for (CategoriaMenu categoriaMenu : this.categoriaList) {
-			selectItemsCategorias.add(new SelectItem(categoriaMenu.getIdCategoriaMenu(), categoriaMenu.getNome()));
-			selectItensTable.add(categoriaMenu.getNome());
+		for (Categoria categoria : this.categoriaList) {
+			selectItemsCategorias.add(new SelectItem(categoria.getIdCategoria(), categoria.getNome()));
+			selectItensTable.add(categoria.getNome());
 		}
 		
 	}
@@ -68,21 +68,21 @@ public class ProdutoMB  implements Serializable {
 	public void salvar(){
 		
 		if (this.selectIdCategoria != null && !this.selectIdCategoria.equals("")){
-			this.produto.setCategoriaMenu(this.categoriaItensMenuFacade.findCategoria(new Long(this.selectIdCategoria)));
+			this.produto.setCategoria(this.produtoFacade.findCategoria(new Long(this.selectIdCategoria)));
 		} else {
-			this.produto.setCategoriaMenu(null);
+			this.produto.setCategoria(null);
 		}
 		
 		if(this.produto.getIdProduto() != null){
 			try{
-				Produto produtoPersist = this.categoriaItensMenuFacade.findItem(this.produto.getIdProduto());
+				Produto produtoPersist = this.produtoFacade.findProduto(this.produto.getIdProduto());
 				produtoPersist.setDesconto(this.produto.getDesconto());
 				produtoPersist.setDescricaoIngredientes(this.produto.getDescricaoIngredientes());
 				produtoPersist.setFoto(this.produto.getFoto());
 				produtoPersist.setNome(this.produto.getNome());
 				produtoPersist.setValor(this.produto.getValor());
 				produtoPersist.setDirFoto(FotoUtil.getDiFoto(produto));
-				this.produto = this.categoriaItensMenuFacade.updateItem(this.produto);
+				this.produto = this.produtoFacade.updateProduto(this.produto);
 				String info = "Item alterado com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,produto.getNome() + info , null));
 			}catch (Exception e){
@@ -94,7 +94,7 @@ public class ProdutoMB  implements Serializable {
 			
 		} else {
 			try{
-				this.categoriaItensMenuFacade.saveItem(this.produto);
+				this.produtoFacade.saveProduto(this.produto);
 				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
@@ -114,11 +114,11 @@ public class ProdutoMB  implements Serializable {
 
 	public void editar(Produto produto){
 		this.produto = produto;
-		if (this.produto.getCategoriaMenu() != null){
-			this.categoriaMenu = this.categoriaItensMenuFacade.findCategoria(this.getProduto().getCategoriaMenu().getIdCategoriaMenu());
-			this.selectIdCategoria = this.categoriaMenu.getIdCategoriaMenu().toString();
+		if (this.produto.getCategoria() != null){
+			this.categoria = this.produtoFacade.findCategoria(this.getProduto().getCategoria().getIdCategoria());
+			this.selectIdCategoria = this.categoria.getIdCategoria().toString();
 		} else {
-			this.categoriaMenu = null;
+			this.categoria = null;
 		}
 		
 	}
@@ -136,18 +136,18 @@ public class ProdutoMB  implements Serializable {
 	 private void atualizaDirFoto() {
 			if(this.produto != null && this.produto.getIdProduto() != null){
 				produto.setDirFoto(FotoUtil.getDiFoto(produto));
-				produto = this.categoriaItensMenuFacade.updateItem(produto);
+				produto = this.produtoFacade.updateProduto(produto);
 			}
 		}
 
 
-	public CategoriaItensMenuFacade getCategoriaItensMenuFacade() {
-		return categoriaItensMenuFacade;
+	public ProdutoFacade getCategoriaItensMenuFacade() {
+		return produtoFacade;
 	}
 
 
-	public void setCategoriaItensMenuFacade(CategoriaItensMenuFacade categoriaItensMenuFacade) {
-		this.categoriaItensMenuFacade = categoriaItensMenuFacade;
+	public void setCategoriaItensMenuFacade(ProdutoFacade produtoFacade) {
+		this.produtoFacade = produtoFacade;
 	}
 
 
@@ -171,23 +171,23 @@ public class ProdutoMB  implements Serializable {
 	}
 
 
-	public List<CategoriaMenu> getCategoriaList() {
+	public List<Categoria> getCategoriaList() {
 		return categoriaList;
 	}
 
 
-	public void setCategoriaList(List<CategoriaMenu> categoriaList) {
+	public void setCategoriaList(List<Categoria> categoriaList) {
 		this.categoriaList = categoriaList;
 	}
 
 
-	public CategoriaMenu getCategoriaMenu() {
-		return categoriaMenu;
+	public Categoria getCategoriaMenu() {
+		return categoria;
 	}
 
 
-	public void setCategoriaMenu(CategoriaMenu categoriaMenu) {
-		this.categoriaMenu = categoriaMenu;
+	public void setCategoriaMenu(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 
