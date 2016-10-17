@@ -20,38 +20,35 @@
 </f:view>
 		
 		<p:layoutUnit  position="west" size="170" style="width: 350px; height:800px"  header="Menu" resizable="true"  collapsible="true" styleClass="teste">
-
-			
-				
 				<p:panelMenu style="width:165px" >
-					
 					<p:submenu label="Admin">
 						<p:menuitem value="Usuários" icon="fa fa-users" ajax="false"
-							action="go_userInit" immediate="true" />
-						<p:menuitem value="Itens do Menu" icon="fa fa-sitemap" ajax="false"
-							action="go_itensInit" immediate="true" />
+							action="/pages/usuario_filtro.xhtml" immediate="true" />
 						<p:menuitem value="Cadastro Usuário" icon="fa fa-user-plus"
-							ajax="false" action="go_user" immediate="true" />
+							ajax="false" action="/pages/usuario_cadastro.xhtml" immediate="true" />
+						<p:menuitem value="Cadastro Produtos" icon="fa fa-sitemap" ajax="false"
+							action="/pages/produto_cadastro.xhtml" immediate="true" />
+						
 						<p:menuitem value="Menu" icon="fa fa-list-alt"
-							ajax="false" action="go_catMenu" immediate="true" />
+							ajax="false" immediate="true" />
 						<p:menuitem value="Cartão Comanda" icon="fa fa-barcode"
-							ajax="false" action="go_cartao" immediate="true" />
+							ajax="false" immediate="true" />
 						<p:menuitem value="Categoria Master App" icon="fa fa-sitemap"
 							ajax="false" action="/pages/categoriasMenu.xhtml" immediate="true" />	
 					</p:submenu>
 					<p:submenu label="Caixa">
-						<p:menuitem value="Home" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+						<p:menuitem value="Home" ajax="false" icon="fa fa-home"   immediate="true" />
 						<p:menuitem value="Abertura/Fechamento" ajax="false" immediate="true" action="go_caixa"	icon="fa fa-gears" />
-						<p:menuitem value="Pedidos" ajax="false" immediate="true" action="go_pedido" icon="fa fa-arrow-circle-right" />
-						<p:menuitem value="Movimentação" ajax="false" immediate="true" action="go_ativUser" icon="fa fa-list-alt" />
-						<p:menuitem value="Fila Bar/cozinha" ajax="false" icon="fa fa-calendar" action="go_calendar" immediate="true" />
+						<p:menuitem value="Pedidos" ajax="false" immediate="true" icon="fa fa-arrow-circle-right" />
+						<p:menuitem value="Movimentação" ajax="false" immediate="true" icon="fa fa-list-alt" />
+						<p:menuitem value="Fila Bar/cozinha" ajax="false" icon="fa fa-calendar" immediate="true" />
 					</p:submenu>
 					<p:separator />
 					
 					<p:submenu label="Comanda">
-					<p:menuitem value="Abertura Comanda" ajax="false" icon="fa fa-barcode"   action="go_aberturaComanda" immediate="true" />
-					<p:menuitem value="Fechamento Comanda" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
-					<p:menuitem value="Extravio Comanda" ajax="false" icon="fa fa-home"   action="go_home" immediate="true" />
+					<p:menuitem value="Abertura Comanda" ajax="false" icon="fa fa-barcode"   immediate="true" />
+					<p:menuitem value="Fechamento Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
+					<p:menuitem value="Extravio Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
 					</p:submenu>
 
 					<p:submenu label="Relatórios">

@@ -5,13 +5,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import model.ItemMenu;
+import model.Produto;
 
 import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
-@FacesConverter(value="itemConverter")
-public class itemConverter implements Converter {
+@FacesConverter(value="produtoConverter")
+public class ProdutoConverter implements Converter {
 	
 		 
 	 @Override  
@@ -22,7 +22,7 @@ public class itemConverter implements Converter {
              @SuppressWarnings("rawtypes")
 			DualListModel dl = (DualListModel) dualList;  
              for (Object o : dl.getSource()) {  
-                 String id = "" + ((ItemMenu) o).getIdItemMenu();  
+                 String id = "" + ((Produto) o).getIdProduto();  
                  if (arg2.equals(id)) {  
                      ret = o;  
                      break;  
@@ -30,7 +30,7 @@ public class itemConverter implements Converter {
              }  
              if (ret == null)  
                  for (Object o : dl.getTarget()) {  
-                     String id = "" + ((ItemMenu) o).getIdItemMenu();  
+                     String id = "" + ((Produto) o).getIdProduto();  
                      if (arg2.equals(id)) {  
                          ret = o;  
                          break;  
@@ -43,8 +43,8 @@ public class itemConverter implements Converter {
      @Override  
      public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {  
          String str = "";  
-         if (arg2 instanceof ItemMenu) {  
-             str = "" + ((ItemMenu) arg2).getIdItemMenu();  
+         if (arg2 instanceof Produto) {  
+             str = "" + ((Produto) arg2).getIdProduto();  
          }  
          return str;  
      }  

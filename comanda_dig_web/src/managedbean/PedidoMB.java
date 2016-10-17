@@ -16,7 +16,7 @@ import ejb.CategoriaItensMenuFacade;
 import ejb.PedidoFacade;
 import model.CategoriaMenu;
 import model.Comanda;
-import model.ItemMenu;
+import model.Produto;
 import model.User;
 import util.SituacaoComanda;
 
@@ -37,13 +37,13 @@ public class PedidoMB  implements Serializable {
     private LoginMB sessionBean;
 	private User user = new User();
 	private String codigoComanda = "";
-	private List<ItemMenu> itensList = new ArrayList<ItemMenu>();
+	private List<Produto> itensList = new ArrayList<Produto>();
 	private Boolean comandaDispo = false;
 	private Comanda comanda = new Comanda();
 	private List<CategoriaMenu> categoriaMenus = new ArrayList<CategoriaMenu>();
 	private ArrayList<String> categoriasString = new ArrayList<String>();
-	private ItemMenu itemMenuSelect = new  ItemMenu();
-	private ItemMenu descitemMenuSelect = new  ItemMenu();
+	private Produto itemMenuSelect = new  Produto();
+	private Produto descitemMenuSelect = new  Produto();
 	private int quant = 1;
 	private String desc = "";
 
@@ -67,8 +67,8 @@ public class PedidoMB  implements Serializable {
 				categoriasString.add(categoriaMenu.getNome());
 			}
 		}
-		itemMenuSelect = new  ItemMenu();
-		descitemMenuSelect = new  ItemMenu();
+		itemMenuSelect = new  Produto();
+		descitemMenuSelect = new  Produto();
 		this.limparDialog();
 	}
 
@@ -168,13 +168,13 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public List<ItemMenu> getItensList() {
+	public List<Produto> getItensList() {
 		return itensList;
 	}
 
 
 
-	public void setItensList(List<ItemMenu> itensList) {
+	public void setItensList(List<Produto> itensList) {
 		this.itensList = itensList;
 	}
 
@@ -228,13 +228,13 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public ItemMenu getItemMenuSelect() {
+	public Produto getItemMenuSelect() {
 		return itemMenuSelect;
 	}
 
 
 
-	public void setItemMenuSelect(ItemMenu itemMenuSelect) {
+	public void setItemMenuSelect(Produto itemMenuSelect) {
 		this.itemMenuSelect = itemMenuSelect;
 	}
 
@@ -264,13 +264,13 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public ItemMenu getDescitemMenuSelect() {
+	public Produto getDescitemMenuSelect() {
 		return descitemMenuSelect;
 	}
 
 
 
-	public void setDescitemMenuSelect(ItemMenu descitemMenuSelect) {
+	public void setDescitemMenuSelect(Produto descitemMenuSelect) {
 		this.descitemMenuSelect = descitemMenuSelect;
 	}
 

@@ -34,12 +34,12 @@
   				
 				<center>
 				<p:tabMenu activeIndex="1" style="width: 95%;">  
-		        <p:menuitem value="Categorias Menu" ajax="false" action="go_catMenu" immediate="true"   />  
-		        <p:menuitem value="Itens Menu" ajax="false" 	action="go_ItemMenu" immediate="true"  />
-		        <p:menuitem value="Itens por Categoria" ajax="false" 	action="go_itensCat" immediate="true"  />  
+		        <p:menuitem value="Categorias" ajax="false" action="go_catMenu" immediate="true"   />  
+		        <p:menuitem value="Produtos" ajax="false" 	action="go_produto" immediate="true"  />
+		        <p:menuitem value="Categorias/Produtos" ajax="false" 	action="go_itensCat" immediate="true"  />  
     			</p:tabMenu>
 				
-				<p:panel id="cadintem" header="Cadastro Itens do Menu" style="width: 95%;" >
+				<p:panel id="cadintem" header="Cadastro Produtos" style="width: 95%;" >
 				
 				<h:panelGrid columns="2" id="matchGrid" style="margin-bottom:10px" cellpadding="5">
 				<f:facet name="header">
@@ -49,23 +49,23 @@
 					
 					
 					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
-					<p:inputText id="nomeId" value="#{itemMB.itemMenu.nome}"
+					<p:inputText id="nomeId" value="#{produtoMB.produto.nome}"
 						maxlength="100" required="true" style="width: 500px;" />
 					
 					
 					<p:outputLabel for="catId" value="Categoria: "  />
-					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{itemMB.selectIdCategoria}" effect="fold">
+					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
-				         <f:selectItems value="#{itemMB.selectItemsCategorias}" />
+				         <f:selectItems value="#{produtoMB.selectItemsCategorias}" />
 					</p:selectOneMenu>
         			
         			<p:outputLabel value="Valor: " />
-				 	<pe:inputNumber id="Input1"  value="#{itemMB.itemMenu.valor}"  style="width:30px">  
+				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width:30px">  
                 		<p:ajax event="blur" update=":form:Input1" />  
             		</pe:inputNumber>  
 		
 					<p:outputLabel value="Foto: " />
-					<p:fileUpload fileUploadListener="#{itemMB.handleFileUpload}"
+					<p:fileUpload fileUploadListener="#{produtoMB.handleFileUpload}"
 						mode="advanced" dragDropSupport="true" update="messages"
 						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
 		
@@ -73,14 +73,14 @@
 					<p:outputLabel  value="Desconto por Item:"/>
 		       
 			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
-	       				<p:outputLabel id="output" value="Valor Percentual #{itemMB.itemMenu.desconto} %"  style="width:150px" />
-	        			<h:inputHidden id="txt2" value="#{itemMB.itemMenu.desconto}" />
+	       				<p:outputLabel id="output" value="Valor Percentual #{produtoMB.produto.desconto} %"  style="width:150px" />
+	        			<h:inputHidden id="txt2" value="#{produtoMB.produto.desconto}" />
 	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
 	    			</h:panelGrid>
 					
 					<p:outputLabel  value="Descrição:"/>
 					<h:panelGrid columns="1" style="margin-bottom: 10px" >
-						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{itemMB.itemMenu.descricaoIngredientes}" counterTemplate="{0} characters remaining." autoResize="false" />
+						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{produtoMB.produto.descricaoIngredientes}" counterTemplate="{0} characters remaining." autoResize="false" />
     					<h:outputText id="display" />
 					</h:panelGrid>
 					
@@ -90,7 +90,7 @@
 				<center>
 					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
 						validateClient="true" update="@form" process="@all"
-						type="submit" actionListener="#{itemMB.salvar}" />
+						type="submit" actionListener="#{produtoMB.salvar}" />
 					<p:commandButton value="Limpar" icon="ui-icon-close"
 						update=":form:matchGrid,:form:messages,:form:growl" process="@this"
 						style="margin-right:20px;">
@@ -108,29 +108,29 @@
 		<center>
 		<p:panel style="width: 95%;">
 		
-			<p:dataTable id="dataTable" var="item" widgetVar="usersTable" value="#{itemMB.itemMenuList}"
+			<p:dataTable id="dataTable" var="prod" widgetVar="usersTable" value="#{produtoMB.produtoList}"
 				paginator="true" rows="5">
 				<f:facet name="header">
            		 Itens Cadastrados
         		</f:facet>
         		
         	
-        	<p:column filterBy="#{item.nome}" headerText="Item"  filterMatchMode="contains">
-				<p:outputLabel value="#{item.nome}" />
+        	<p:column filterBy="#{prod.nome}" headerText="Produto"  filterMatchMode="contains">
+				<p:outputLabel value="#{prod.nome}" />
 			</p:column>
 			
 			<p:column filterBy="#{item.categoriaMenu.nome}" headerText="Categoria" filterMatchMode="exact">
 	            <f:facet name="filter">
 	                <p:selectOneMenu onchange="PF('usersTable').filter()" >
 	                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-	                    <f:selectItems value="#{itemMB.selectItensTable}" />
+	                    <f:selectItems value="#{produtoMB.selectItensTable}" />
 	                </p:selectOneMenu>
 	            </f:facet>
-	            <p:outputLabel value="#{item.categoriaMenu.nome}" />
+	            <p:outputLabel value="#{prod.categoriaMenu.nome}" />
         	</p:column>
 			
 			<p:column  headerText="Valor"  >
-				<p:outputLabel value="#{item.valor}">
+				<p:outputLabel value="#{prod.valor}">
 					<f:convertNumber pattern="#0.00"/>
 				</p:outputLabel>
 			</p:column>
@@ -139,14 +139,14 @@
 				<f:facet name="header">
 					<p:outputLabel value="Descrição" />
 				</f:facet>
-				<p:outputLabel value="#{item.descricaoIngredientes}" />
+				<p:outputLabel value="#{prod.descricaoIngredientes}" />
 			</p:column>
 			
         	<p:column>
 				<f:facet name="header">
 					<p:outputLabel value="Perct. Desconto" />
 				</f:facet>
-				<p:outputLabel value="#{item.desconto}" />
+				<p:outputLabel value="#{prod.desconto}" />
 			</p:column>
 			
 			<p:column style="width:80px;text-align: center">
@@ -154,7 +154,7 @@
 					<p:outputLabel value="Foto" />
 				</f:facet>
 				<center>
-					<p:graphicImage url="../fotos/item_#{item.idItemMenu}.jpg" cache="false" width="60px"
+					<p:graphicImage url="../fotos/prod_#{prod.idProduto}.jpg" cache="false" width="60px"
 						height="60px" />
 				</center>
 			</p:column>
@@ -163,7 +163,7 @@
 				<f:facet name="header">
 					<p:outputLabel value="Editar" />
 				</f:facet>
-				<p:commandButton ajax="true"  actionListener="#{itemMB.editar(item)}"
+				<p:commandButton ajax="true"  actionListener="#{produtoMB.editar(prod)}"
 					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar" >
 				</p:commandButton>
 			</p:column>

@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebListener;
 
 import model.CategoriaMaster;
 import model.CategoriaMenu;
-import model.ItemMenu;
+import model.Produto;
 import model.User;
 import ejb.CategoriaItensMenuFacade;
 import ejb.UserFacade;
@@ -32,7 +32,7 @@ public class FotoUtil implements ServletContextListener{
 	private static final String TIPE_USU = "usu_";
 	private static final String TIPE_CATEGORIA = "cat_";
 	private static final String TIPE_CATEGORIA_MASTER = "cat_mas_";
-	private static final String TIPE_ITEM = "item_";
+	private static final String TIPE_PRODUTO = "prod_";
 	private static final String EXTENCAO = ".jpg";
 
 	@EJB
@@ -40,8 +40,8 @@ public class FotoUtil implements ServletContextListener{
 	@EJB
 	private CategoriaItensMenuFacade categoriaItensMenuFacade;
 	
-	public static String CONTEXT_PATH_FOTOS = "";
-	public static String CONTEXT_PATH_IMAGENS = "";
+	public static String CONTEXT_PATH_FOTOS = "C:\\comanda_dig\\imagens\\";
+	public static String CONTEXT_PATH_IMAGENS = "C:\\comanda_dig\\imagens\\";
 
 
 	public void contextInitialized(ServletContextEvent event) {
@@ -64,9 +64,9 @@ public class FotoUtil implements ServletContextListener{
 				criarAtualizarFoto(categoriaMenu);
 			}
 			
-			List<ItemMenu> itemMenus = this.categoriaItensMenuFacade.findAllItem();
-			for (ItemMenu itemMenu : itemMenus) {
-				criarAtualizarFoto(itemMenu);
+			List<Produto> produtos = this.categoriaItensMenuFacade.findAllItem();
+			for (Produto produto : produtos) {
+				criarAtualizarFoto(produto);
 			}
 		}
 
@@ -78,13 +78,13 @@ public class FotoUtil implements ServletContextListener{
 		System.out.println("FUDEU A BAGAÇA....");
 	}
 	
-	public static void criarAtualizarFoto(ItemMenu itemMenu) {
-		if (itemMenu != null && itemMenu.getIdItemMenu() != null){
-			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_ITEM + itemMenu.getIdItemMenu()+EXTENCAO;
-			if (itemMenu.getFoto() != null){
-				criaArquivo(itemMenu.getFoto(), arquivo);
+	public static void criarAtualizarFoto(Produto produto) {
+		if (produto != null && produto.getIdProduto() != null){
+			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_PRODUTO + produto.getIdProduto()+EXTENCAO;
+			if (produto.getFoto() != null){
+				criaArquivo(produto.getFoto(), arquivo);
 			} else {
-				criaArquivo(getFotoDefault(TIPE_ITEM),arquivo);
+				criaArquivo(getFotoDefault(TIPE_PRODUTO),arquivo);
 			}
 		}
 	}
@@ -152,7 +152,7 @@ public class FotoUtil implements ServletContextListener{
 				 arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default_usu.jpg";
 			} else if (tipo.equals(FotoUtil.TIPE_CATEGORIA)){
 				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
-			} else if (tipo.equals(FotoUtil.TIPE_ITEM)){
+			} else if (tipo.equals(FotoUtil.TIPE_PRODUTO)){
 				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
 			} else if (tipo.equals(FotoUtil.TIPE_CATEGORIA_MASTER)) {
 				arquivo = CONTEXT_PATH_IMAGENS + File.separator+ "default.jpg";
@@ -182,7 +182,7 @@ public class FotoUtil implements ServletContextListener{
 		
 		if (object instanceof User) return  PASTA_DEFAULT_FOTOS + "/"+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
 		else if (object instanceof CategoriaMenu) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((CategoriaMenu)object).getIdCategoriaMenu()+EXTENCAO;
-		else if (object instanceof ItemMenu) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_ITEM + ((ItemMenu)object).getIdItemMenu()+EXTENCAO;
+		else if (object instanceof Produto) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_PRODUTO + ((Produto)object).getIdProduto()+EXTENCAO;
 		else if (object instanceof CategoriaMaster) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_CATEGORIA_MASTER + ((CategoriaMaster)object).getIdCategoriaMaster()+EXTENCAO;
 		return null;
 	}

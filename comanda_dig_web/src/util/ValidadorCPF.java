@@ -14,7 +14,7 @@ import javax.faces.validator.ValidatorException;
 public class ValidadorCPF implements Validator {
      @Override
      public void validate(FacesContext arg0, UIComponent arg1, Object valorTela) throws ValidatorException {
-         System.out.println("teste1 "+ valorTela); 
+         
     	 if (!validaCPF(String.valueOf(valorTela))) {
                FacesMessage message = new FacesMessage();
                message.setSeverity(FacesMessage.SEVERITY_ERROR);

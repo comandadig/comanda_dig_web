@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import ejb.UserFacade;
 import model.User;
+import util.PaginacaoEnum;
 
 
 
@@ -49,7 +50,7 @@ public class LoginMB  implements Serializable {
 		if (list != null && !list.isEmpty()){
 			this.usuario = list.get(0);
 			if (usuario.getSenha().equals(this.senha)){
-				return "go_init";
+				return PaginacaoEnum.HOME.getValue();
 			} else {
 				String info = "Senha Inválida !";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_ERROR,info, ""));
@@ -60,7 +61,7 @@ public class LoginMB  implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_ERROR,info, ""));
 		}
 		
-		return "";
+		return null;
 	}
 
 
