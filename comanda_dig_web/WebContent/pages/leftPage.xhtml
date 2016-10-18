@@ -21,25 +21,32 @@
 		
 		<p:layoutUnit  position="west" size="170" style="width: 350px; height:800px"  header="Menu" resizable="true"  collapsible="true" styleClass="teste">
 				<p:panelMenu style="width:165px" >
-					<p:submenu label="Admin">
+					<p:submenu label="Usuários">
 						<p:menuitem value="Usuários" icon="fa fa-users" ajax="false"
 							action="/pages/usuario_filtro.xhtml" immediate="true" />
 						<p:menuitem value="Cadastro Usuário" icon="fa fa-user-plus"
 							ajax="false" action="/pages/usuario_cadastro.xhtml" immediate="true" />
-						
+					    
+					  </p:submenu>
+					  <p:submenu label="Produtos/Menu">  
 					    <p:menuitem value="Produtos" icon="fa fa-sitemap" ajax="false"
 							action="/pages/produto_filtro.xhtml" immediate="true" />
 						
 						<p:menuitem value="Categorias/Produtos" icon="fa fa-sitemap" ajax="false"
 							action="/pages/categoria_cadastro.xhtml" immediate="true" />
 						
-						<p:menuitem value="Menu" icon="fa fa-list-alt"
-							ajax="false" immediate="true" />
-						<p:menuitem value="Cartão Comanda" icon="fa fa-barcode"
-							ajax="false" immediate="true" />
-						<p:menuitem value="Categoria Master App" icon="fa fa-sitemap"
+						<p:menuitem value="Menu App" icon="fa fa-sitemap"
 							ajax="false" action="/pages/categoriasMenu.xhtml" immediate="true" />	
 					</p:submenu>
+					
+					<p:submenu label="Comanda">
+						<p:menuitem value="Cadastro de Cartão" action="/pages/cartao_cadastro.xhtml"  ajax="false" icon="fa fa-barcode"   immediate="true" />
+						<p:menuitem value="Abertura Comanda" ajax="false" icon="fa fa-barcode"   immediate="true" />
+						<p:menuitem value="Fechamento Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
+						<p:menuitem value="Extravio Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
+					</p:submenu>
+					
+						
 					<p:submenu label="Caixa">
 						<p:menuitem value="Home" ajax="false" icon="fa fa-home"   immediate="true" />
 						<p:menuitem value="Abertura/Fechamento" ajax="false" immediate="true" action="go_caixa"	icon="fa fa-gears" />
@@ -49,11 +56,7 @@
 					</p:submenu>
 					<p:separator />
 					
-					<p:submenu label="Comanda">
-					<p:menuitem value="Abertura Comanda" ajax="false" icon="fa fa-barcode"   immediate="true" />
-					<p:menuitem value="Fechamento Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
-					<p:menuitem value="Extravio Comanda" ajax="false" icon="fa fa-home"   immediate="true" />
-					</p:submenu>
+					
 
 					<p:submenu label="Relatórios">
 						<p:menuitem value="Report 1" ajax="false" icon="fa fa-file-pdf-o" />

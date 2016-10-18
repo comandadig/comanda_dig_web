@@ -29,31 +29,31 @@
 
 				<center>          			
   				<p:tabMenu activeIndex="2" style="width: 95%;">  
-		        <p:menuitem value="Categorias Menu" ajax="false" action="go_catMenu" immediate="true"   />  
-		        <p:menuitem value="Itens Menu" ajax="false" 	action="go_ItemMenu" immediate="true"  />
-		        <p:menuitem value="Itens por Categoria" ajax="false" 	action="go_itensCat" immediate="true"  />  
+		        <p:menuitem value="Categorias" ajax="false" action="/pages/categoria_cadastro.xhtml" immediate="true"   />  
+		        <p:menuitem value="Produtos" ajax="false" 	action="/pages/produto_cadastro.xhtml" immediate="true"  />
+		        <p:menuitem value="Categorias/Produtos" ajax="false" action="/pages/produto_categoria.xhtml"	 immediate="true"  /> 
     			</p:tabMenu>
 				
 				<p:panel id="cadcat" header="Itens x Categorias" style="width: 95%;" >
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 		
 				<p:outputLabel for="catId" value="Categoria: "  />
-					<p:selectOneMenu style="width:160px"  filter="true" filterMatchMode="startsWith" id="catId"  value="#{itensCategoriaMB.selectIdCategoria}" effect="fold">
+					<p:selectOneMenu style="width:160px"  filter="true" filterMatchMode="startsWith" id="catId"  value="#{ProdutoCategoriaMB.selectIdCategoria}" effect="fold">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
-				         <f:selectItems value="#{itensCategoriaMB.selectItemsCategorias}" />
-				         <p:ajax event="change"  process="@this" update="@form"  listener="#{itensCategoriaMB.selectCat()}"></p:ajax>
+				         <f:selectItems value="#{ProdutoCategoriaMB.selectItemsCategorias}" />
+				         <p:ajax event="change"  process="@this" update="@form"  listener="#{ProdutoCategoriaMB.selectCat()}"></p:ajax>
 					</p:selectOneMenu>	
 				</h:panelGrid>	
-			 	<p:pickList id="PojoPickList" value="#{itensCategoriaMB.dualListModel}" var="item" effect="bounce"
+			 	<p:pickList id="PojoPickList" value="#{ProdutoCategoriaMB.dualListModel}" var="item" effect="bounce"
                 itemValue="#{item}" itemLabel="#{item.nome}" showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
-                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="itemConverter">
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="ProdutoConverter">
  
 			        
-			        <f:facet name="targetCaption">#{itensCategoriaMB.selectcategoriaMenu.nome}</f:facet>
-			        <f:facet name="sourceCaption">Itens Disponíveis</f:facet>
+			        <f:facet name="targetCaption">#{ProdutoCategoriaMB.selectcategoriaMenu.nome}</f:facet>
+			        <f:facet name="sourceCaption">Produtos Disponíveis</f:facet>
 			 				        				 
 			        <p:column style="width:10%">
-			            <p:graphicImage url="../fotos/item_#{item.idItemMenu}.jpg" width="30px"
+			            <p:graphicImage url="../fotos/prod_#{item.idProduto}.jpg" width="30px"
 						height="30px" />
 			        </p:column>
 			 
@@ -68,8 +68,8 @@
 				<center>
 					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
 						validateClient="true" update=":form:matchGrid" process="@all"
-						type="submit" actionListener="#{itensCategoriaMB.salvar}" />
-					<p:commandButton value="Limpar" icon="ui-icon-close" actionListener="#{itensCategoriaMB.ini()}"
+						type="submit" actionListener="#{ProdutoCategoriaMB.salvar}" />
+					<p:commandButton value="Limpar" icon="ui-icon-close" actionListener="#{ProdutoCategoriaMB.ini()}"
 						update="@form" process="@this"
 						style="margin-right:20px;">
 						<p:resetInput target=":form:matchGrid,:form:messages,:form:growl" />

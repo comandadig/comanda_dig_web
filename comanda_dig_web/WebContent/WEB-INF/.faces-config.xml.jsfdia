@@ -12,14 +12,14 @@
   model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#Item.xhtml" PATH="/pages/Item.xhtml"
   SHAPE="800,272,50,25" model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#ItensCat.xhtml"
-  PATH="/pages/ItensCat.xhtml" SHAPE="381,426,0,0"
+ <PROCESS-ITEM NAME="rules:#pages#produto_categoria.xhtml"
+  PATH="/pages/produto_categoria.xhtml" SHAPE="381,426,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#itensInit.xhtml"
   PATH="/pages/itensInit.xhtml" SHAPE="232,512,50,25"
   model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#cartao.xhtml"
-  PATH="/pages/cartao.xhtml" SHAPE="494,596,0,0"
+ <PROCESS-ITEM NAME="rules:#pages#cartao_cadastro.xhtml"
+  PATH="/pages/cartao_cadastro.xhtml" SHAPE="494,596,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#pages#caixa.xhtml" PATH="/pages/caixa.xhtml"
   SHAPE="699,467,0,0" model-entity="JSFProcessGroup" persistent="true"/>
