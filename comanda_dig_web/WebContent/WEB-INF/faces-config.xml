@@ -5,6 +5,10 @@
   <converter-id>ProdutoConverter</converter-id>
   <converter-class>util.ProdutoConverter</converter-class>
  </converter>
+  <converter>
+  <converter-id>CategoriaConverter</converter-id>
+  <converter-class>util.CategoriaConverter</converter-class>
+ </converter>
  <validator>
   <validator-id>ValidadorCPF</validator-id>
   <validator-class>util.ValidadorCPF</validator-class>

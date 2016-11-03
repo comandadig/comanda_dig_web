@@ -32,26 +32,26 @@
 
 				<center>          			
   				<p:tabMenu activeIndex="0" style="width: 95%;">  
-		        <p:menuitem value="Categoria Master" ajax="false" action="go_cat_master" immediate="true"   />  
-		        <p:menuitem value="Categorias" ajax="false" 	action="/pages/categoriasMenu.xhtml" immediate="true"  />
+		        <p:menuitem value="Menu" action="/pages/menu_cadastro.xhtml" immediate="true"  />  
+		        <p:menuitem value="Menu/Categorias" ajax="false" action="/pages/menu_categorias.xhtml" immediate="true"  />
     			</p:tabMenu>
 				
-				<p:panel id="cadcat" header="Cadastro Categorias" style="width: 95%;" >
+				<p:panel id="cadcat" header="Menu" style="width: 95%;" >
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 					
 					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
-					<p:inputText id="nomeId" value="#{categoriaMasterMB.categoriaMaster.nome}"
+					<p:inputText id="nomeId" value="#{menuMB.menu.nome}"
 						maxlength="100" required="true" style="width: 500px;" />
 					
 		
 					<p:outputLabel value="Foto: " />
-					<p:fileUpload fileUploadListener="#{categoriaMasterMB.handleFileUpload}"
+					<p:fileUpload fileUploadListener="#{menuMB.handleFileUpload}"
 						mode="advanced" dragDropSupport="true" update="messages"
 						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
 		
 					<p:outputLabel  value="Descrição da Categoria:"/>
 					<h:panelGrid columns="1" style="margin-bottom: 10px" >
-						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{categoriaMasterMB.categoriaMaster.descricao}" counterTemplate="{0} characters remaining." autoResize="false" />
+						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{menuMB.menu.descricao}" counterTemplate="{0} characters remaining." autoResize="false" />
     					<h:outputText id="display" />
 					</h:panelGrid>
 					
@@ -61,7 +61,7 @@
 				<center>
 					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
 						validateClient="true" update=":form:matchGrid" process="@all"
-						type="submit" actionListener="#{categoriaMasterMB.salvar}" />
+						type="submit" actionListener="#{menuMB.salvar}" />
 					<p:commandButton value="Limpar" icon="ui-icon-close"
 						update=":form:matchGrid,:form:messages,:form:growl" process="@this"
 						style="margin-right:20px;">
@@ -78,10 +78,10 @@
 		
 		<p:panel style="width: 95%;">
 		
-			<p:dataTable id="dataTable" var="cat" value="#{categoriaMasterMB.categoriaList}"
+			<p:dataTable id="dataTable" var="cat" value="#{menuMB.menuList}"
 				paginator="true" rows="5">
 				<f:facet name="header">
-           		 Categoria Master
+           		 Menu
         		</f:facet>
         		
         	
@@ -106,7 +106,7 @@
 					<p:outputLabel value="Foto" />
 				</f:facet>
 				<center>
-					<p:graphicImage  url="../fotos/cat_mas#{cat.idCategoriaMaster}.jpg" width="60px"
+					<p:graphicImage  url="../fotos/menu_#{cat.idMenu}.jpg" width="60px"
 						height="60px" />
 				</center>
 			</p:column>
@@ -118,7 +118,7 @@
 				<p:commandButton ajax="true" 
 					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar">
 					<f:setPropertyActionListener value="#{cat}"
-						target="#{categoriaMasterMB.categoriaMaster}" />
+						target="#{menuMB.menu}" />
 				</p:commandButton>
 			</p:column>
         		

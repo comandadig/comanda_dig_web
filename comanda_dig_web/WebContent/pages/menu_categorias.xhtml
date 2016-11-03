@@ -30,16 +30,16 @@
 				
 				<center>          			
   				<p:tabMenu activeIndex="1" style="width: 95%;">  
-		        <p:menuitem value="Categoria Master" ajax="false" action="go_cat_master" immediate="true"   />  
-		        <p:menuitem value="Categorias" ajax="false" 	action="/pages/categoriasMenu.xhtml" immediate="true"  />
+		        <p:menuitem value="Menu" action="/pages/menu_cadastro.xhtml" immediate="true"   />  
+		        <p:menuitem value="Menu/Categorias" ajax="false" action="/pages/menu_categorias.xhtml" immediate="true"  />
     			</p:tabMenu>
 				
 				
 				
-				<p:panel id="cadcat" header="Categorias Menu" style="width: 95%;" >
+				<p:panel id="cadcat" header="Menu/Categorias" style="width: 95%;" >
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 		
-				<p:outputLabel for="catId" value="Categoria: "  />
+				<p:outputLabel for="catId" value="Menu: "  />
 					<p:selectOneMenu style="width:160px"  filter="true" filterMatchMode="startsWith" id="catId"  value="#{menuCategoriaMB.selectIdCategoria}" effect="fold">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
 				         <f:selectItems value="#{menuCategoriaMB.selectItemsCategorias}" />
@@ -48,14 +48,14 @@
 				</h:panelGrid>	
 			 	<p:pickList id="PojoPickList" value="#{menuCategoriaMB.dualListModel}" var="item" effect="bounce"
                 itemValue="#{item}" itemLabel="#{item.nome}" showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
-                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="itemConverter">
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="CategoriaConverter">
  
 			        
 			        <f:facet name="targetCaption">#{menuCategoriaMB.selectcategoriaMenu.nome}</f:facet>
 			        <f:facet name="sourceCaption">Itens Disponíveis</f:facet>
 			 				        				 
 			        <p:column style="width:10%">
-			            <p:graphicImage url="../fotos/cat_mas_#{item.idCategoriaMenu}.jpg" width="30px"
+			            <p:graphicImage url="../fotos/menu_#{item.idCategoria}.jpg" width="30px"
 						height="30px" />
 			        </p:column>
 			 

@@ -15,7 +15,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import model.CategoriaMaster;
+import model.Menu;
 import model.Categoria;
 import model.Produto;
 import model.User;
@@ -31,7 +31,7 @@ public class FotoUtil implements ServletContextListener{
 	private static final String PASTA_DEFAULT_FOTOS = "/fotos";
 	private static final String TIPE_USU = "usu_";
 	private static final String TIPE_CATEGORIA = "cat_";
-	private static final String TIPE_CATEGORIA_MASTER = "cat_mas_";
+	private static final String TIPE_CATEGORIA_MASTER = "menu_";
 	private static final String TIPE_PRODUTO = "prod_";
 	private static final String EXTENCAO = ".jpg";
 
@@ -100,9 +100,9 @@ public class FotoUtil implements ServletContextListener{
 		}
 	}
 
-	public static void criarAtualizarFoto(CategoriaMaster categoriaMenu) {
-		if (categoriaMenu != null && categoriaMenu.getIdCategoriaMaster() != null){
-			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA_MASTER + categoriaMenu.getIdCategoriaMaster()+EXTENCAO;
+	public static void criarAtualizarFoto(Menu categoriaMenu) {
+		if (categoriaMenu != null && categoriaMenu.getIdMenu() != null){
+			String arquivo = CONTEXT_PATH_FOTOS + File.separator+ TIPE_CATEGORIA_MASTER + categoriaMenu.getIdMenu()+EXTENCAO;
 			if (categoriaMenu.getFoto() != null){
 				criaArquivo(categoriaMenu.getFoto(), arquivo);
 			} else {
@@ -183,7 +183,7 @@ public class FotoUtil implements ServletContextListener{
 		if (object instanceof User) return  PASTA_DEFAULT_FOTOS + "/"+ TIPE_USU + ((User)object).getIdUser()+EXTENCAO;
 		else if (object instanceof Categoria) return PASTA_DEFAULT_FOTOS +  "/" + TIPE_CATEGORIA + ((Categoria)object).getIdCategoria()+EXTENCAO;
 		else if (object instanceof Produto) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_PRODUTO + ((Produto)object).getIdProduto()+EXTENCAO;
-		else if (object instanceof CategoriaMaster) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_CATEGORIA_MASTER + ((CategoriaMaster)object).getIdCategoriaMaster()+EXTENCAO;
+		else if (object instanceof Menu) return PASTA_DEFAULT_FOTOS +  "/"+ TIPE_CATEGORIA_MASTER + ((Menu)object).getIdMenu()+EXTENCAO;
 		return null;
 	}
 
