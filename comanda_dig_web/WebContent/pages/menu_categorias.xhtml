@@ -30,7 +30,7 @@
 				
 				<center>          			
   				<p:tabMenu activeIndex="1" style="width: 95%;">  
-		        <p:menuitem value="Menu" action="/pages/menu_cadastro.xhtml" immediate="true"   />  
+		        <p:menuitem value="Menu" ajax="false" action="/pages/menu_cadastro.xhtml" immediate="true"   />  
 		        <p:menuitem value="Menu/Categorias" ajax="false" action="/pages/menu_categorias.xhtml" immediate="true"  />
     			</p:tabMenu>
 				
@@ -52,7 +52,7 @@
  
 			        
 			        <f:facet name="targetCaption">#{menuCategoriaMB.selectcategoriaMenu.nome}</f:facet>
-			        <f:facet name="sourceCaption">Itens Disponíveis</f:facet>
+			        <f:facet name="sourceCaption">Categorias Disponíveis</f:facet>
 			 				        				 
 			        <p:column style="width:10%">
 			            <p:graphicImage url="../fotos/menu_#{item.idCategoria}.jpg" width="30px"
