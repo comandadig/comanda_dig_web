@@ -35,7 +35,7 @@ public class MenuMB  implements Serializable {
 	@PostConstruct
 	public void ini(){
 		this.menu = new Menu();
-		this.menuList = produtoFacade.findAllCategoriaMaster();
+		this.menuList = produtoFacade.findAllMenu();
 	}
 
 	
@@ -43,7 +43,7 @@ public class MenuMB  implements Serializable {
 		
 		if(this.menu.getIdMenu() != null){
 			try{
-				menu = produtoFacade.updateCategoriaMaster(menu);
+				menu = produtoFacade.updateMenu(menu);
 				String info = "Categoria alterada com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO,menu.getNome() + info , null));
 			}catch (Exception e){
@@ -55,7 +55,7 @@ public class MenuMB  implements Serializable {
 			
 		} else {
 			try{
-				this.produtoFacade.saveCategoriaMaster(this.menu);
+				this.produtoFacade.saveMenu(this.menu);
 				this.atualizaDirFoto();
 			}catch (Exception e){
 				String info = e.getMessage();
@@ -74,7 +74,7 @@ public class MenuMB  implements Serializable {
 	 private void atualizaDirFoto() {
 		if (this.menu != null && this.menu.getIdMenu() != null){
 			menu.setDirfoto(FotoUtil.getDiFoto(menu));
-			menu = produtoFacade.updateCategoriaMaster(menu);
+			menu = produtoFacade.updateMenu(menu);
 		 }
 	}
 

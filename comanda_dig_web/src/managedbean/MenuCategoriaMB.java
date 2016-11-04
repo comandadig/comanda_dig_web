@@ -40,7 +40,7 @@ public class MenuCategoriaMB  implements Serializable {
 	public void ini(){
 		selectIdCategoria = "";
 		selectItemsCategorias = new ArrayList<SelectItem>();
-		categoriaList = this.produtoFacade.findAllCategoriaMaster();
+		categoriaList = this.produtoFacade.findAllMenu();
 		for (Menu categoriaMenu : this.categoriaList) {
 			selectItemsCategorias.add(new SelectItem(categoriaMenu.getIdMenu(), categoriaMenu.getNome()));
 		}
@@ -52,9 +52,9 @@ public class MenuCategoriaMB  implements Serializable {
 	
 	public void selectCat(){
 		if (selectIdCategoria != null && !selectIdCategoria.equals("")){
-			Menu cat = this.produtoFacade.findCategoriaMaster(new Long(this.selectIdCategoria));
+			Menu cat = this.produtoFacade.findMenu(new Long(this.selectIdCategoria));
 			this.selectcategoriaMenu = cat;
-			dualListModel.setTarget(cat.getCategoriaMenus());
+			dualListModel.setTarget(cat.getCategorias());
 		}
 		List<Categoria> list = new ArrayList<Categoria>();
 		List<Categoria> listAll = this.produtoFacade.findAllCategoria(); 
@@ -63,6 +63,9 @@ public class MenuCategoriaMB  implements Serializable {
 				list.add(itemMenu);
 			}
 		}
+		
+		
+		
 		dualListModel.setSource(list);
 	}
 	
@@ -70,18 +73,18 @@ public class MenuCategoriaMB  implements Serializable {
 	public void salvar(){
 		if (selectIdCategoria != null && !selectIdCategoria.equals("")){
 			List<Categoria> list = dualListModel.getTarget();
-			Menu categoriaMenu = this.produtoFacade.findCategoriaMaster(new Long(selectIdCategoria));
+			Menu categoriaMenu = this.produtoFacade.findMenu(new Long(selectIdCategoria));
 			if (list!= null && !list.isEmpty()){
 				for (Categoria categoria : list) {
 					categoria = this.produtoFacade.findCategoria(categoria.getIdCategoria());
 					categoria.setCategoriaMaster(categoriaMenu);
 				}
 			} else {
-				categoriaMenu.setCategoriaMenus(null);
+				categoriaMenu.setCategorias(null);
 			}
-			categoriaMenu.setCategoriaMenus(list);
+			categoriaMenu.setCategorias(list);
 			try{
-				this.produtoFacade.updateCategoriaMaster(categoriaMenu);
+				this.produtoFacade.updateMenu(categoriaMenu);
 				String info = "Categoria: " + categoriaMenu.getNome()+ " alterada com Sucesso ";
 				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_INFO, info , null));
 			}catch (Exception e){
