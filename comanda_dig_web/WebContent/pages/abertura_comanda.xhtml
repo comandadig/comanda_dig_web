@@ -97,6 +97,8 @@
 				
 				<p:separator></p:separator>
 				
+				
+				<p:panel id="botoes" rendered="#{comandaMB.comandaDispo}">
 				<center>
 					<p:commandButton value="Abrir Comanda" ajax="false" icon="ui-icon-check"
 						validateClient="true" update="@form" process="@all"
@@ -107,7 +109,7 @@
 						<p:resetInput target=":form:matchGrid5,:form:matchGrid4,:form:matchGrid3,:form:matchGrid2,:form:matchGrid,:form:messages,:form:growl" />
 					</p:commandButton>
 				</center>
-					
+				</p:panel>		
 			</p:panel>
 		</center>
 		

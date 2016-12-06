@@ -26,7 +26,8 @@ public class ComandaMB  implements Serializable {
 	
 	private Comanda comanda = new Comanda();
 	private String codigoComanda = "";
-	private Boolean comandaDispo = false;
+	private boolean comandaDispo = false;
+	
 
 	
 	public ComandaMB() {
@@ -103,13 +104,16 @@ public class ComandaMB  implements Serializable {
 
 
 
-	public Boolean getComandaDispo() {
+
+
+
+	public boolean isComandaDispo() {
 		return comandaDispo;
 	}
 
 
 
-	public void setComandaDispo(Boolean comandaDispo) {
+	public void setComandaDispo(boolean comandaDispo) {
 		this.comandaDispo = comandaDispo;
 	}
 
