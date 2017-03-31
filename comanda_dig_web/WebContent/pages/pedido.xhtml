@@ -52,7 +52,31 @@
 				
 				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
 					
-					<p:outputLabel  value="Usuário Logado:" style="width: 120px"/>
+					
+					<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
+					
+					<h:panelGrid  columns="3" id="matchGrid4" cellpadding="1" >
+					<p:inputText id="scanInput" value="#{pedidoMB.codigoComanda}" 
+							     maxlength="100"  style="width:250px"
+							     onkeypress="if (event.keyCode == 13) {onchange(); return false; }" > 
+	       						<f:ajax event="change"  listener="#{pedidoMB.consultaComanda()}" /> 
+	       			</p:inputText>
+					
+					<p:commandButton icon="fa fa-search-plus" ajax="true" process="@this" update="@form" actionListener="#{pedidoMB.consultaComanda()}"/>
+					
+					
+					<h:panelGrid  columns="2" id="matchGrid3" cellpadding="1" rendered="#{pedidoMB.comandaDispo}">
+						<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
+						<p:graphicImage url="../imagens/okLogo.jpg"  width="20px" height="20px" />
+					</h:panelGrid>
+					
+					</h:panelGrid>
+					
+					
+					
+					
+					
+					
         			
         			<p:panelGrid columns="2" style="width:250px">
 				    <f:facet name="header">
@@ -75,46 +99,106 @@
 					
 				
 				
-				<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
 				
-				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
-				<p:inputText id="scanInput" value="#{pedidoMB.codigoComanda}" 
-						     maxlength="100"  style="width:250px"
-						     onkeypress="if (event.keyCode == 13) {onchange(); return false; }" > 
-       						<f:ajax event="change"  listener="#{pedidoMB.consultaComanda()}" /> 
-       			</p:inputText>
-				
-				<p:commandButton icon="fa fa-search-plus" ajax="true" process="@this" update="@form" actionListener="#{pedidoMB.consultaComanda()}"/>
-				</h:panelGrid>
-				
-				
-				<h:panelGrid  columns="2" id="matchGrid3" cellpadding="1" rendered="#{pedidoMB.comandaDispo}">
-					<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
-					<p:graphicImage url="../imagens/okLogo.jpg"  width="20px" height="20px" />
-				</h:panelGrid>
 					     
-				</h:panelGrid>		     
+				</h:panelGrid>
+				
+				<p:separator></p:separator>		     
 				
 				
-				<h:panelGrid  columns="1" id="matchGrid323" cellpadding="1" rendered="#{pedidoMB.comandaDispo}" >
+				
+				<h:panelGrid  columns="2" id="matchGrid323"  rendered="#{pedidoMB.comandaDispo}" >
 					
-					<p:dataTable style="width: 60%" paginator="true"  rows="10"  id="table" var="item" widgetVar="table" value="#{pedidoMB.itensList}" >
+					
+				<p:commandButton value="Adicinar Produtos Pedido" onclick="PF('prodDialog').show()" style="width:150px;height:150px" rendered="#{pedidoMB.comandaDispo}"/>
+				
+					
+					
+					
+					<p:dataTable paginator="true"  rows="10"   id="tablessdd" var="item" widgetVar="table" value="#{pedidoMB.itensList}" >
+					
+					<f:facet name="header">
+				        Pedidos
+				    </f:facet>
+					
+					<p:column  headerText="Categoria" >
+		           
+		            <p:outputLabel value="#{item.categoria.nome}" />
+       				 </p:column>
+											
+					<p:column  headerText="Item" >
+					
+					<p:panelGrid  styleClass="semBorda"  columns="2"  >
+					<p:graphicImage url="../fotos/prod_#{item.idProduto}.jpg" width="30px"
+								height="30px" />
+					
+					<p:outputLabel value="#{item.nome}" />
+					</p:panelGrid>
+					</p:column>
+					
+					<p:column  headerText="Desc. Ingred. Item" style="width: 10%;" >
+						<center>
+							<p:commandButton icon="fa fa-list"  oncomplete="PF('descitemDialog').show()" update=":form:descitemDetail">
+								<f:setPropertyActionListener value="#{item}"
+								target="#{pedidoMB.descitemMenuSelect}" />
+							</p:commandButton>
+						</center>
+					</p:column>
+					
+					
+					<p:column  headerText="Valor" style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.valor}">
+							<f:convertNumber pattern="#0.00"/>
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
+					
+					<p:column  headerText="Remover" style="width: 10%;" >
+						<center>
+							<p:commandButton icon="fa fa-plus-circle" actionListener="#{pedidoMB.limparDialog()}" oncomplete="PF('itemDialog').show()" update=":form:itemDetail">
+								<f:setPropertyActionListener value="#{item}"
+								target="#{pedidoMB.itemMenuSelect}" />
+							</p:commandButton>
+						</center>
+					</p:column>
+					
+				
+					</p:dataTable>
+				
+				</h:panelGrid>
+				<div class="ui-fluid">
+				<p:commandButton value="Fechar Pedido" style="height:50px" rendered="#{pedidoMB.comandaDispo}"/>
+				</div>
+				
+			</p:panel>
+		</center>
+		
+</p:layoutUnit>	
+</p:layout>
 
-					<p:column filterBy="#{item.categoriaMenu.nome}" style="width: 20%;"  headerText="Categoria"  filterMatchMode="exact">
+
+<p:dialog header="Produtos" widgetVar="prodDialog" modal="true" showEffect="fade" width="700px" hideEffect="fade" resizable="false">
+        	
+            <p:outputPanel id="display2ssss">
+				<p:dataTable  paginator="true"  rows="10"  id="table" var="item" widgetVar="table" value="#{pedidoMB.itensList}" >
+
+					<p:column filterBy="#{item.categoria.nome}" style="width: 20%;"  headerText="Categoria"  filterMatchMode="exact">
 		            <f:facet name="filter">
 		                <p:selectOneMenu onchange="PF('table').filter()" >
 		                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
 		                    <f:selectItems value="#{pedidoMB.categoriasString}" />
 		                </p:selectOneMenu>
 		            </f:facet>
-		            <p:outputLabel value="#{item.categoriaMenu.nome}" />
+		            <p:outputLabel value="#{item.categoria.nome}" />
        				 </p:column>
 											
 					<p:column  headerText="Item"  filterBy="#{item.nome}"
 						 filterMatchMode="contains">
 					
 					<p:panelGrid  styleClass="semBorda"  columns="2"  >
-					<p:graphicImage url="../fotos/item_#{item.idItemMenu}.jpg" width="30px"
+					<p:graphicImage url="../fotos/prod_#{item.idProduto}.jpg" width="30px"
 								height="30px" />
 					
 					<p:outputLabel value="#{item.nome}" />
@@ -151,15 +235,11 @@
 					
 				
 					</p:dataTable>
-				
-				</h:panelGrid>
-				
-				
-			</p:panel>
-		</center>
-		
-</p:layoutUnit>	
-</p:layout>
+					
+			</p:outputPanel>
+ 
+    </p:dialog>
+
 
 
 <p:dialog header="Users" widgetVar="usuDialog" modal="true" showEffect="fade" width="700px" hideEffect="fade" resizable="false">
@@ -235,9 +315,6 @@
 <p:dialog header="Item" widgetVar="itemDialog" modal="true" showEffect="fade" width="300px" hideEffect="clip" resizable="false">
         <p:outputPanel id="itemDetail" style="text-align:center;">
             <p:panelGrid  columns="2" rendered="#{not empty pedidoMB.itemMenuSelect}" columnClasses="label,value">
-                <f:facet name="header">
-					<p:graphicImage url="../fotos/item_#{pedidoMB.itemMenuSelect.idItemMenu}.jpg"  width="60px" height="60px" />
-                </f:facet>
  
                 <h:outputText value="Item:" />
                 <h:outputText value="#{pedidoMB.itemMenuSelect.nome}" />
@@ -266,7 +343,7 @@
         <p:outputPanel id="descitemDetail" style="text-align:center;">
             <p:panelGrid  columns="2" rendered="#{not empty pedidoMB.descitemMenuSelect}" columnClasses="label,value">
                 <f:facet name="header">
-					<p:graphicImage url="../fotos/item_#{pedidoMB.descitemMenuSelect.idItemMenu}.jpg"  width="60px" height="60px" />
+					<p:graphicImage url="../fotos/item_#{pedidoMB.descitemMenuSelect.idProduto}.jpg"  width="60px" height="60px" />
                 </f:facet>
  
                 <h:outputText value="Item:" />
@@ -286,6 +363,10 @@
            
         </p:outputPanel>
  </p:dialog>
+ 
+ 
+ 
+
 
 	
 </h:form>

@@ -15,6 +15,7 @@
 		</f:facet>
 		<ui:include src="../css/all_css.css" />
 		
+		
 	</h:head>
 </f:view>
 
@@ -100,36 +101,11 @@
 				</p:panel>
 				
 				<p:spacer width="30px" > </p:spacer>
-				<p:accordionPanel rendered="#{caixaMB.caixaAberto}">
-        		<p:tab title="Comandas">
-            	
-            	<p:panelGrid columns="3"  cellpadding="10">
-		               
-		               <p:dataGrid var="comand" value="#{caixaMB.comandasDisponiveis}" columns="3" layout="grid"
-						        rows="12" paginator="true" id="cars"
-						        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						        rowsPerPageTemplate="6,12,16" style="width:300px;height:400px">
- 
-					        <f:facet name="header">
-					            Comandas Disponoveis
-					        </f:facet>
-					 
-					       <p:panel header="#{comand.cartaoComanda.codComanda}" style="text-align:center">
-				            <h:panelGrid columns="1" style="width:100%"> 
-				                <p:graphicImage url="../imagens/barcode-icon.jpg"  width="40px" height="40px" />
-				 
-				                <h:outputText value="#{comand.cartaoComanda.codComanda}" />
-				 
-				                <p:commandLink update=":form:comDetail" oncomplete="PF('comDialog').show()" title="Comanda Detail">
-				                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
-				                    <f:setPropertyActionListener value="#{comand}" target="#{caixaMB.comandaSelect}" />
-				                </p:commandLink>
-				            </h:panelGrid>
-				        </p:panel>
-    					</p:dataGrid>
-    					
-    					
-    				<p:dataTable id="dataTable" var="com" value="#{caixaMB.comandasAbertas}" style="width:300px;height:400px"
+				
+				
+				<p:accordionPanel  activeIndex="-2">
+			        <p:tab title="Comandas Abertas">
+			           <p:dataTable id="dataTable" var="com" value="#{caixaMB.comandasAbertas}" 
 						paginator="true" rows="5">
 						<f:facet name="header">
 		           		 Comandas Abertas
@@ -150,7 +126,7 @@
 						<f:facet name="header">
 							<p:outputLabel value="Visualizar" />
 						</f:facet>
-						<p:commandButton ajax="true" 
+						<p:commandButton ajax="true" oncomplete="PF('comDialog').show()"
 							update="@form" process="@this"  icon="ui-icon-search" title="Visualizar">
 							<f:setPropertyActionListener value="#{usu}"
 								target="#{pedidoMB.user}" />
@@ -158,47 +134,30 @@
 					</p:column>
 		
 				</p:dataTable>
-
-
-				<p:dataTable id="dataTable2" var="com" value="#{caixaMB.comandasFechadas}" style="width:300px;height:400px"
-						paginator="true" rows="5">
-						<f:facet name="header">
-		           		 Comandas Abertas
-		        		</f:facet>
-					
-					<p:column width="10%">
-						<p:graphicImage url="../imagens/barcode-icon.jpg"  width="20px" height="20px" />	
-					</p:column>
-					
-					<p:column filterBy="#{com.cartaoComanda.codComanda}" headerText="Cód. Cartão Comanda"
-						footerText="contains" filterMatchMode="contains">
-						<p:outputLabel value="#{com.cartaoComanda.codComanda}" />
-					</p:column>
-		
-						
-					
-					<p:column style="width:55px;text-align: center">
-						<f:facet name="header">
-							<p:outputLabel value="Visualizar" />
-						</f:facet>
-						<p:commandButton ajax="true" 
-							update="@form" process="@this"  icon="ui-icon-search" title="Visualizar">
-							<f:setPropertyActionListener value="#{usu}"
-								target="#{pedidoMB.user}" />
-						</p:commandButton>
-					</p:column>
-		
-				</p:dataTable>
-    					
-    					
-	          	</p:panelGrid>
-        		</p:tab>
-        		</p:accordionPanel>
+			        </p:tab>
+			        <p:tab title="Comandas Fechadas">
+			            <h:panelGrid columns="2" cellpadding="10">
+			               
+			            </h:panelGrid>
+			        </p:tab>
+			       
+			    </p:accordionPanel>
 			</p:panel>
 		</center>
 		
 </p:layoutUnit>	
 </p:layout>
+
+
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	<center>
+        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    </center>   
+    </p:confirmDialog>
+
+</h:form>
 
 <p:dialog header="Comanda" widgetVar="comDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
         <p:outputPanel id="comDetail" style="text-align:center;">
@@ -219,14 +178,5 @@
             </p:panelGrid>
         </p:outputPanel>
     </p:dialog>
-
-	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-	<center>
-        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </center>   
-    </p:confirmDialog>
-
-</h:form>
 
 </html>

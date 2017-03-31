@@ -14,21 +14,6 @@
 			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
 		</f:facet>
 		<ui:include src="../css/all_css.css" />
-		<script type="text/javascript">
-
-		jQuery(document).ready(function(){
-			 
-			
-			$('input[name="form:scanInput"]').keydown(function(e){
-		        if(e.which==17 || e.which==74 ){
-		            e.preventDefault();
-		        }else{
-		            console.log(e.which);
-		        }
-		    })
-		});
-		
- 	</script>
 	</h:head>
 </f:view>
 
@@ -57,7 +42,7 @@
 				
 				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
 				<p:inputText id="scanInput" value="#{comandaMB.codigoComanda}" 
-						     maxlength="100" required="true" style="width:250px"
+						     maxlength="100" style="width:250px"
 						     onkeypress="if (event.keyCode == 13) {onchange(); return false; }" > 
        						<p:ajax update="@form"  event="change" process="@this" listener="#{comandaMB.consultaComanda()}" /> 
        			</p:inputText>
