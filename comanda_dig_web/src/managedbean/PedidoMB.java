@@ -6,25 +6,24 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
-import ejb.ProdutoFacade;
+import ejb.ComandaFacade;
 import ejb.PedidoFacade;
+import ejb.ProdutoFacade;
+import exception.ComandaException;
 import model.Categoria;
 import model.Comanda;
 import model.Produto;
 import model.User;
-import util.SituacaoComanda;
 
 
 
 @ManagedBean(name="pedidoMB")
 @ViewScoped
-public class PedidoMB  implements Serializable {
+public class PedidoMB extends AbstractMB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,20 +31,21 @@ public class PedidoMB  implements Serializable {
 	private PedidoFacade pedidoFacade;
 	@EJB
 	private ProdutoFacade itensFacade;
+	@EJB
+	private ComandaFacade comandaFacade;
+	
 	
 	@ManagedProperty("#{loginMB}")
     private LoginMB sessionBean;
 	private User user = new User();
 	private String codigoComanda = "";
 	private List<Produto> itensList = new ArrayList<Produto>();
+	private List<Produto> pedidosList = new ArrayList<>();
 	private Boolean comandaDispo = false;
 	private Comanda comanda = new Comanda();
 	private List<Categoria> categorias = new ArrayList<Categoria>();
 	private ArrayList<String> categoriasString = new ArrayList<String>();
-	private Produto itemMenuSelect = new  Produto();
 	private Produto descitemMenuSelect = new  Produto();
-	private int quant = 1;
-	private String desc = "";
 
 	
 	
@@ -63,41 +63,45 @@ public class PedidoMB  implements Serializable {
 				categoriasString.add(categoria.getNome());
 			}
 		}
-		itemMenuSelect = new  Produto();
 		descitemMenuSelect = new  Produto();
-		this.limparDialog();
 	}
 
 
 	public void consultaComanda(){
-		System.out.println(codigoComanda);
-		Comanda comanda = pedidoFacade.buscarComanda(codigoComanda);
-		if (comanda != null){
-			
-			if (comanda.getSituacao().equals(SituacaoComanda.DISPONIVEL.getValue())){
-				comandaDispo = false;
-				String info = " Comanda Não Esta Aberta..";
-				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_ERROR,"Cod Coamnda: " + codigoComanda + info , null));
-			} else {
-				comandaDispo = true;
-			}
-			
-		} else {
-			comandaDispo = false;
-			String info = " Comanda Não Cadastrada..";
-			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(FacesMessage.SEVERITY_ERROR,"Cod Coamnda: " + codigoComanda + info , null));
+		try {
+			comanda = comandaFacade.vericaComandaPedido(codigoComanda);
+			comandaDispo = true;
+		} catch (ComandaException e) {
+			menssagemErro(e.getMessage());
 		}
 	}
 
 	
-	public void limparDialog(){
-		quant = 1;
-		desc = "";
+	
+	public void adicionarProduto(Produto produto){
+		produto.setHasPedido(true);
+		this.pedidosList.add(produto);
+	}
+
+	
+	public void fecharPedido(){
+		System.out.println("entou..........");
+		for (Produto p : this.pedidosList) {
+			System.out.println("produto: "+ p.getNome());
+		}
 	}
 	
-	public void adicionarItem(){
-		
-		System.out.println("item "  + itemMenuSelect.getNome());
+	
+	public Double totalPedidos(){
+		double total = 0d;
+		for (Produto p : this.pedidosList) {
+			total = total + p.valorTot();
+		}
+		return total;
+	}
+	
+	public void removeProduto(Produto produto){
+		this.pedidosList.remove(produto);
 	}
 	
 	public PedidoFacade getPedidoFacade() {
@@ -224,39 +228,6 @@ public class PedidoMB  implements Serializable {
 
 
 
-	public Produto getItemMenuSelect() {
-		return itemMenuSelect;
-	}
-
-
-
-	public void setItemMenuSelect(Produto itemMenuSelect) {
-		this.itemMenuSelect = itemMenuSelect;
-	}
-
-
-
-	public int getQuant() {
-		return quant;
-	}
-
-
-
-	public void setQuant(int quant) {
-		this.quant = quant;
-	}
-
-
-
-	public String getDesc() {
-		return desc;
-	}
-
-
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 
 
 
@@ -268,6 +239,16 @@ public class PedidoMB  implements Serializable {
 
 	public void setDescitemMenuSelect(Produto descitemMenuSelect) {
 		this.descitemMenuSelect = descitemMenuSelect;
+	}
+
+
+	public List<Produto> getPedidosList() {
+		return pedidosList;
+	}
+
+
+	public void setPedidosList(List<Produto> pedidosList) {
+		this.pedidosList = pedidosList;
 	}
 
 	

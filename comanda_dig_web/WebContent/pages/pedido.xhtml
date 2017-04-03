@@ -15,18 +15,6 @@
 		</f:facet>
 		<ui:include src="../css/all_css.css" />
 		<script type="text/javascript">
-
-		jQuery(document).ready(function(){
-			 
-			
-			$('input[name="form:scanInput"]').keydown(function(e){
-		        if(e.which==17 || e.which==74 || e.which==13){
-		            e.preventDefault();
-		        }else{
-		            console.log(e.which);
-		        }
-		    })
-		});
 		
  	</script>
 	</h:head>
@@ -115,7 +103,7 @@
 					
 					
 					
-					<p:dataTable paginator="true"  rows="10"   id="tablessdd" var="item" widgetVar="table" value="#{pedidoMB.itensList}" >
+					<p:dataTable paginator="true"  rows="10"   id="tablessdd" var="item" widgetVar="table" sortBy="#{item.idProduto}" value="#{pedidoMB.pedidosList}" >
 					
 					<f:facet name="header">
 				        Pedidos
@@ -136,7 +124,7 @@
 					</p:panelGrid>
 					</p:column>
 					
-					<p:column  headerText="Desc. Ingred. Item" style="width: 10%;" >
+					<p:column  headerText="Desc." style="width: 10%;" >
 						<center>
 							<p:commandButton icon="fa fa-list"  oncomplete="PF('descitemDialog').show()" update=":form:descitemDetail">
 								<f:setPropertyActionListener value="#{item}"
@@ -146,7 +134,7 @@
 					</p:column>
 					
 					
-					<p:column  headerText="Valor" style="width: 10%;" >
+					<p:column  headerText="Valor Uni." style="width: 10%;" >
 						<center>
 						<p:outputLabel value="#{item.valor}">
 							<f:convertNumber pattern="#0.00"/>
@@ -155,21 +143,42 @@
 					</p:column>
 					
 					
+					<p:column  headerText="Quant." style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.quant}">
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
+					
+					<p:column  headerText="Valor." style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.valorTot()}">
+							<f:convertNumber pattern="#0.00"/>
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
 					<p:column  headerText="Remover" style="width: 10%;" >
 						<center>
-							<p:commandButton icon="fa fa-plus-circle" actionListener="#{pedidoMB.limparDialog()}" oncomplete="PF('itemDialog').show()" update=":form:itemDetail">
-								<f:setPropertyActionListener value="#{item}"
-								target="#{pedidoMB.itemMenuSelect}" />
+							<p:commandButton icon="fa fa-close" actionListener="#{pedidoMB.removeProduto(item)}" update=":form:tablessdd" >
 							</p:commandButton>
 						</center>
 					</p:column>
+					
+					<p:columnGroup type="footer">
+					<p:row>
+						<p:column colspan="5"  style="text-align:right; font-weight:bold;" footerText="Total: " />
+						<p:column footerText="#{pedidoMB.totalPedidos()}" /> 
+					</p:row>
+				</p:columnGroup>
 					
 				
 					</p:dataTable>
 				
 				</h:panelGrid>
 				<div class="ui-fluid">
-				<p:commandButton value="Fechar Pedido" style="height:50px" rendered="#{pedidoMB.comandaDispo}"/>
+				<p:commandButton value="Fechar Pedido" style="height:50px" rendered="#{pedidoMB.comandaDispo}" ajax="false" process="@this" action="#{pedidoMB.fecharPedido()}" />
 				</div>
 				
 			</p:panel>
@@ -179,7 +188,7 @@
 </p:layout>
 
 
-<p:dialog header="Produtos" widgetVar="prodDialog" modal="true" showEffect="fade" width="700px" hideEffect="fade" resizable="false">
+<p:dialog header="Produtos" widgetVar="prodDialog" modal="true" showEffect="fade" width="900px" hideEffect="fade" resizable="false">
         	
             <p:outputPanel id="display2ssss">
 				<p:dataTable  paginator="true"  rows="10"  id="table" var="item" widgetVar="table" value="#{pedidoMB.itensList}" >
@@ -205,17 +214,9 @@
 					</p:panelGrid>
 					</p:column>
 					
-					<p:column  headerText="Desc. Ingred. Item" style="width: 10%;" >
-						<center>
-							<p:commandButton icon="fa fa-list"  oncomplete="PF('descitemDialog').show()" update=":form:descitemDetail">
-								<f:setPropertyActionListener value="#{item}"
-								target="#{pedidoMB.descitemMenuSelect}" />
-							</p:commandButton>
-						</center>
-					</p:column>
+								
 					
-					
-					<p:column  headerText="Valor" style="width: 10%;" >
+					<p:column  headerText="Valor Unitario"  >
 						<center>
 						<p:outputLabel value="#{item.valor}">
 							<f:convertNumber pattern="#0.00"/>
@@ -223,21 +224,34 @@
 						</center>
 					</p:column>
 					
-					
-					<p:column  headerText="Adiconar" style="width: 10%;" >
+					<p:column  headerText="Quantidate"  >
 						<center>
-							<p:commandButton icon="fa fa-plus-circle" actionListener="#{pedidoMB.limparDialog()}" oncomplete="PF('itemDialog').show()" update=":form:itemDetail">
-								<f:setPropertyActionListener value="#{item}"
-								target="#{pedidoMB.itemMenuSelect}" />
-							</p:commandButton>
+						 <p:spinner id="basic" value="#{item.quant}" min="1" disabled="#{item.hasPedido}" />
 						</center>
 					</p:column>
 					
-				
+					
+					
+					<p:column  headerText="Adiconar" style="width: 10%;" >
+						<center>
+							<p:commandButton rendered="#{!item.hasPedido}" icon="fa fa-plus-circle" actionListener="#{pedidoMB.adicionarProduto(item)}"  update=":form:table,:form:tablessdd">
+							</p:commandButton>
+							
+							<p:graphicImage rendered="#{item.hasPedido}" url="../imagens/okLogo.jpg"  width="20px" height="20px" />
+						</center>
+					</p:column>
+					
+					
 					</p:dataTable>
 					
 			</p:outputPanel>
- 
+ 			
+ 			<p:spacer height="20px"></p:spacer>
+ 			<p:separator></p:separator>
+ 			<div class="ui-fluid">
+				<p:commandButton value="Fechar" process="@this" style="height:50px" onclick="PF('prodDialog').hide()"/>
+			</div>
+ 			
     </p:dialog>
 
 
@@ -309,41 +323,17 @@
 				</p:dataTable>
 			</p:outputPanel>
  
+ 
     </p:dialog>
 
 
-<p:dialog header="Item" widgetVar="itemDialog" modal="true" showEffect="fade" width="300px" hideEffect="clip" resizable="false">
-        <p:outputPanel id="itemDetail" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty pedidoMB.itemMenuSelect}" columnClasses="label,value">
- 
-                <h:outputText value="Item:" />
-                <h:outputText value="#{pedidoMB.itemMenuSelect.nome}" />
- 
-                <h:outputText value="Valor:" />
-                <p:outputLabel value="#{pedidoMB.itemMenuSelect.valor}">
-					<f:convertNumber pattern="#0.00"/>
-				</p:outputLabel>
- 				
- 				<h:outputLabel for="minMax" value="Quantidade: " />
-        		<p:spinner id="minMax" value="#{pedidoMB.quant}" min="1" max="100" />
-        		
-        		<h:outputLabel value="Desc. Pedido" />
-        		<p:inputTextarea rows="3" value="#{pedidoMB.desc}" />
-        		
-            </p:panelGrid>
-            <p:spacer height="10"></p:spacer>
-            <p:separator></p:separator>
-            <p:spacer height="10"></p:spacer>
-            <p:commandButton form="@form" process="@this" actionListener="#{pedidoMB.adicionarItem()}"  oncomplete="PF('itemDialog').hide()" value="Adicionar" />
-        </p:outputPanel>
- </p:dialog>
 
 
 <p:dialog header="Descrição Item" widgetVar="descitemDialog" modal="true" showEffect="fade" width="300px" hideEffect="clip" resizable="false">
         <p:outputPanel id="descitemDetail" style="text-align:center;">
             <p:panelGrid  columns="2" rendered="#{not empty pedidoMB.descitemMenuSelect}" columnClasses="label,value">
                 <f:facet name="header">
-					<p:graphicImage url="../fotos/item_#{pedidoMB.descitemMenuSelect.idProduto}.jpg"  width="60px" height="60px" />
+					<p:graphicImage url="../fotos/prod_#{pedidoMB.descitemMenuSelect.idProduto}.jpg"  width="60px" height="60px" />
                 </f:facet>
  
                 <h:outputText value="Item:" />
@@ -357,7 +347,7 @@
  				
         		
         		<h:outputLabel value="Desc. Pedido" />
-        		<p:inputTextarea readonly="true" rows="6" value="#{pedidoMB.descitemMenuSelect.descricaoIngredientes}" />
+        		<p:inputTextarea  rows="6" value="#{pedidoMB.descitemMenuSelect.descricaoIngredientes}" />
         		
             </p:panelGrid>
            
