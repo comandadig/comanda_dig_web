@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				<center>          			
+  				
+				
+				<p:panel id="cadcat" header="Cadastro Categorias" style="width: 95%;" >
+				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+					
+					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
+					<p:inputText id="nomeId" value="#{categoriaMB.categoria.nome}"
+						maxlength="100" required="true" style="width: 500px;" />
+					
+		
+					<p:outputLabel value="Foto: " />
+					<p:fileUpload fileUploadListener="#{categoriaMB.handleFileUpload}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
+		
+		
+					<p:outputLabel  value="Desconto por Categoria:"/>
+		       
+			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
+	       				<p:outputLabel id="output" value="Valor Percentual #{categoriaMB.categoria.desconto} %"  style="width:150px" />
+	        			<h:inputHidden id="txt2" value="#{categoriaMB.categoria.desconto}" />
+	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
+	    			</h:panelGrid>
+					
+					<p:outputLabel  value="Descrição da Categoria:"/>
+					<h:panelGrid columns="1" style="margin-bottom: 10px" >
+						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{categoriaMB.categoria.descricao}" counterTemplate="{0} characters remaining." autoResize="false" />
+    					<h:outputText id="display" />
+					</h:panelGrid>
+					
+				</h:panelGrid>
+				<p:separator></p:separator>
+		
+				<center>
+					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
+						validateClient="true" update=":form:matchGrid" process="@all"
+						type="submit" actionListener="#{categoriaMB.salvar}" />
+					<p:commandButton value="Limpar" icon="ui-icon-close"
+						update=":form:matchGrid,:form:messages,:form:growl" process="@this"
+						style="margin-right:20px;">
+						<p:resetInput target=":form:matchGrid,:form:messages,:form:growl" />
+					</p:commandButton>
+				</center>
+		
+		
+			</p:panel>
+		
+			<p:spacer height="50" />
+		
+		</center>
+		
+		<p:panel style="width: 95%;">
+		
+			<p:dataTable id="dataTable" var="cat" value="#{categoriaMB.categoriaList}"
+				paginator="true" rows="5">
+				<f:facet name="header">
+           		 Categorias
+        		</f:facet>
+        		
+        	
+        	<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Nome" />
+				</f:facet>
+				<p:outputLabel value="#{cat.nome}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Descrição" />
+				</f:facet>
+				<p:outputLabel value="#{cat.descricao}" />
+			</p:column>
+			
+        	<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Perct. Desconto" />
+				</f:facet>
+				<p:outputLabel value="#{cat.desconto}" />
+			</p:column>
+			
+			<p:column style="width:80px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Foto" />
+				</f:facet>
+				<center>
+					<p:graphicImage  url="../fotos/cat_#{cat.idCategoria}.jpg" width="60px"
+						height="60px" />
+				</center>
+			</p:column>
+			
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Editar" />
+				</f:facet>
+				<p:commandButton ajax="true" 
+					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar">
+					<f:setPropertyActionListener value="#{cat}"
+						target="#{categoriaMB.categoria}" />
+				</p:commandButton>
+			</p:column>
+        		
+       		</p:dataTable>
+      </p:panel>
+            
+</p:layoutUnit>	
+</p:layout>	
+</h:form>
+
+</html>

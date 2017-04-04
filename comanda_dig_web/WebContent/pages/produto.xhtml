@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				          			
+  				
+				<center>
+				
+				
+				<p:panel id="cadintem" header="Cadastro Produtos" style="width: 95%;" >
+				
+				<h:panelGrid columns="2" id="matchGrid" style="margin-bottom:10px" cellpadding="5">
+				<f:facet name="header">
+           		
+        		</f:facet>
+				
+					
+					
+					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
+					<p:inputText id="nomeId" value="#{produtoMB.produto.nome}"
+						maxlength="100" required="true" style="width: 500px;" />
+					
+					
+					<p:outputLabel for="catId" value="Categoria: "  />
+					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
+				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
+				         <f:selectItems value="#{produtoMB.selectItemsCategorias}" />
+					</p:selectOneMenu>
+        			
+        			<p:outputLabel value="Valor: " />
+				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width:30px">  
+                		<p:ajax event="blur" update=":form:Input1" />  
+            		</pe:inputNumber>  
+		
+					<p:outputLabel value="Foto: " />
+					<p:fileUpload fileUploadListener="#{produtoMB.handleFileUpload}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
+		
+		
+					<p:outputLabel  value="Desconto por Item:"/>
+		       
+			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
+	       				<p:outputLabel id="output" value="Valor Percentual #{produtoMB.produto.desconto} %"  style="width:150px" />
+	        			<h:inputHidden id="txt2" value="#{produtoMB.produto.desconto}" />
+	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
+	    			</h:panelGrid>
+					
+					<p:outputLabel  value="Descrição:"/>
+					<h:panelGrid columns="1" style="margin-bottom: 10px" >
+						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{produtoMB.produto.descricaoIngredientes}" counterTemplate="{0} characters remaining." autoResize="false" />
+    					<h:outputText id="display" />
+					</h:panelGrid>
+					
+				</h:panelGrid>
+				<p:separator></p:separator>
+		
+				<center>
+					<p:commandButton value="Savar" ajax="false" icon="ui-icon-check"
+						validateClient="true" update="@form" process="@all"
+						type="submit" actionListener="#{produtoMB.salvar}" />
+					<p:commandButton value="Limpar" icon="ui-icon-close"
+						update=":form:matchGrid,:form:messages,:form:growl" process="@this"
+						style="margin-right:20px;">
+						<p:resetInput target=":form:matchGrid,:form:messages,:form:growl" />
+					</p:commandButton>
+				</center>
+		
+		
+			</p:panel>
+		
+			<p:spacer height="50" />
+		
+		</center>
+		
+		<center>
+		<p:panel style="width: 95%;">
+		
+			<p:dataTable id="dataTable" var="prod" widgetVar="usersTable" value="#{produtoMB.produtoList}"
+				paginator="true" rows="5">
+				<f:facet name="header">
+           		 Itens Cadastrados
+        		</f:facet>
+        		
+        	
+        	<p:column filterBy="#{prod.nome}" headerText="Produto"  filterMatchMode="contains">
+				<p:outputLabel value="#{prod.nome}" />
+			</p:column>
+			
+			<p:column filterBy="#{item.categoriaMenu.nome}" headerText="Categoria" filterMatchMode="exact">
+	            <f:facet name="filter">
+	                <p:selectOneMenu onchange="PF('usersTable').filter()" >
+	                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+	                    <f:selectItems value="#{produtoMB.selectItensTable}" />
+	                </p:selectOneMenu>
+	            </f:facet>
+	            <p:outputLabel value="#{prod.categoria.nome}" />
+        	</p:column>
+			
+			<p:column  headerText="Valor"  >
+				<p:outputLabel value="#{prod.valor}">
+					<f:convertNumber pattern="#0.00"/>
+				</p:outputLabel>
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Descrição" />
+				</f:facet>
+				<p:outputLabel value="#{prod.descricaoIngredientes}" />
+			</p:column>
+			
+        	<p:column>
+				<f:facet name="header">
+					<p:outputLabel value="Perct. Desconto" />
+				</f:facet>
+				<p:outputLabel value="#{prod.desconto}" />
+			</p:column>
+			
+			<p:column style="width:80px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Foto" />
+				</f:facet>
+				<center>
+					<p:graphicImage url="../fotos/prod_#{prod.idProduto}.jpg" cache="false" width="60px"
+						height="60px" />
+				</center>
+			</p:column>
+			
+			<p:column style="width:55px;text-align: center">
+				<f:facet name="header">
+					<p:outputLabel value="Editar" />
+				</f:facet>
+				<p:commandButton ajax="true"  actionListener="#{produtoMB.editar(prod)}"
+					update="@form" process="@this"  icon="ui-icon-pencil" title="Editar" >
+				</p:commandButton>
+			</p:column>
+        		
+       		</p:dataTable>
+      </p:panel>
+      </center>
+</p:layoutUnit>	
+</p:layout>	
+</h:form>
+
+</html>
