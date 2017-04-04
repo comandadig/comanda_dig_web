@@ -46,36 +46,36 @@
 					
 					<p:outputLabel for="nomeId" value="Nome: " maxlength="100" />
 					<p:inputText id="nomeId" value="#{produtoMB.produto.nome}"
-						maxlength="100" required="true" style="width: 500px;" />
+						maxlength="100" required="true" style="width: 400px;" />
 					
 					
 					<p:outputLabel for="catId" value="Categoria: "  />
-					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
+					<p:selectOneMenu style="width:385px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
 				         <f:selectItems value="#{produtoMB.selectItemsCategorias}" />
 					</p:selectOneMenu>
         			
         			<p:outputLabel value="Valor: " />
-				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width:30px">  
+				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width: 400px">  
                 		<p:ajax event="blur" update=":form:Input1" />  
             		</pe:inputNumber>  
 		
 					<p:outputLabel value="Foto: " />
-					<p:fileUpload fileUploadListener="#{produtoMB.handleFileUpload}"
+					<p:fileUpload fileUploadListener="#{produtoMB.handleFileUpload}" style="width: 400px"
 						mode="advanced" dragDropSupport="true" update="messages"
 						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
 		
 		
-					<p:outputLabel  value="Desconto por Item:"/>
+					<p:outputLabel for="console" value="Pedido/Fila:"/>
 		       
-			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
-	       				<p:outputLabel id="output" value="Valor Percentual #{produtoMB.produto.desconto} %"  style="width:150px" />
-	        			<h:inputHidden id="txt2" value="#{produtoMB.produto.desconto}" />
-	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
-	    			</h:panelGrid>
+			         <p:selectOneRadio id="console" value="#{produtoMB.produto.fila}" required="true">
+			            <f:selectItem itemLabel="Sem Fila" itemValue="SF" />
+			            <f:selectItem itemLabel="Fila Bar" itemValue="SB" />
+			            <f:selectItem itemLabel="Fila Cozinha" itemValue="FC" />
+			        </p:selectOneRadio>
 					
 					<p:outputLabel  value="Descrição:"/>
-					<h:panelGrid columns="1" style="margin-bottom: 10px" >
+					<h:panelGrid columns="1" style="margin-bottom: 10px;" >
 						<p:inputTextarea  rows="5" cols="30" counter="display" maxlength="300" value="#{produtoMB.produto.descricaoIngredientes}" counterTemplate="{0} characters remaining." autoResize="false" />
     					<h:outputText id="display" />
 					</h:panelGrid>

@@ -124,6 +124,13 @@
 					</p:panelGrid>
 					</p:column>
 					
+					<p:column  headerText="Fila" style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.fila}">
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
 					<p:column  headerText="Desc." style="width: 10%;" >
 						<center>
 							<p:commandButton icon="fa fa-list"  oncomplete="PF('descitemDialog').show()" update=":form:descitemDetail">
@@ -161,7 +168,7 @@
 					
 					<p:column  headerText="Remover" style="width: 10%;" >
 						<center>
-							<p:commandButton icon="fa fa-close" actionListener="#{pedidoMB.removeProduto(item)}" update=":form:tablessdd" >
+							<p:commandButton icon="fa fa-close" actionListener="#{pedidoMB.removeProduto(item)}" update=":form:tablessdd,:form:table" >
 							</p:commandButton>
 						</center>
 					</p:column>

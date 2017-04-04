@@ -24,7 +24,7 @@ import ejb.ProdutoFacade;
 
 @ManagedBean(name="produtoMB")
 @ViewScoped
-public class ProdutoMB  implements Serializable {
+public class ProdutoMB extends AbstractMB  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

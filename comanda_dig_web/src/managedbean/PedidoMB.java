@@ -85,10 +85,7 @@ public class PedidoMB extends AbstractMB implements Serializable {
 
 	
 	public void fecharPedido(){
-		System.out.println("entou..........");
-		for (Produto p : this.pedidosList) {
-			System.out.println("produto: "+ p.getNome());
-		}
+		pedidoFacade.fecharPedido(pedidosList, comanda, user);
 	}
 	
 	
@@ -102,6 +99,12 @@ public class PedidoMB extends AbstractMB implements Serializable {
 	
 	public void removeProduto(Produto produto){
 		this.pedidosList.remove(produto);
+		
+		for (Produto p :itensList) {
+			if(p.getIdProduto().equals(produto.getIdProduto())) {
+				p.setHasPedido(false);
+			}
+		}
 	}
 	
 	public PedidoFacade getPedidoFacade() {
