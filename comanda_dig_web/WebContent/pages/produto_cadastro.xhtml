@@ -54,13 +54,13 @@
 					
 					
 					<p:outputLabel for="catId" value="Categoria: "  />
-					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
+					<p:selectOneMenu style="width:160px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold" required="true">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
 				         <f:selectItems value="#{produtoMB.selectItemsCategorias}" />
 					</p:selectOneMenu>
         			
-        			<p:outputLabel value="Valor: " />
-				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width:30px">  
+        			<p:outputLabel value="Valor: "   />
+				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width:30px" required="true">  
                 		<p:ajax event="blur" update=":form:Input1" />  
             		</pe:inputNumber>  
 		
@@ -70,13 +70,14 @@
 						sizeLimit="1000000000" allowTypes="/(\.|\/)(jpg|gif|jpeg|png)$/" />
 		
 		
-					<p:outputLabel  value="Desconto por Item:"/>
+					
+					<p:outputLabel for="console" value="Pedido/Fila:"/>
 		       
-			        <h:panelGrid columns="1" style="margin-bottom: 10px" >
-	       				<p:outputLabel id="output" value="Valor Percentual #{produtoMB.produto.desconto} %"  style="width:150px" />
-	        			<h:inputHidden id="txt2" value="#{produtoMB.produto.desconto}" />
-	        			<p:slider for="txt2" display="output"  displayTemplate="Valor Percentual {value} %"  style="width:150px"/>
-	    			</h:panelGrid>
+			         <p:selectOneRadio id="console" value="#{produtoMB.produto.fila}" required="true">
+			            <f:selectItem itemLabel="Sem Fila" itemValue="SF" />
+			            <f:selectItem itemLabel="Fila Bar" itemValue="SB" />
+			            <f:selectItem itemLabel="Fila Cozinha" itemValue="FC" />
+			        </p:selectOneRadio>
 					
 					<p:outputLabel  value="Descrição:"/>
 					<h:panelGrid columns="1" style="margin-bottom: 10px" >

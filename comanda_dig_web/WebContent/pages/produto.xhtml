@@ -50,13 +50,13 @@
 					
 					
 					<p:outputLabel for="catId" value="Categoria: "  />
-					<p:selectOneMenu style="width:385px" filter="true" filterMatchMode="startsWith" id="catId"  value="#{produtoMB.selectIdCategoria}" effect="fold">
+					<p:selectOneMenu style="width:385px" filter="true" filterMatchMode="startsWith" id="catId" required="true"  value="#{produtoMB.selectIdCategoria}" effect="fold">
 				         <f:selectItem noSelectionOption="true" itemLabel="Selecione" itemValue=""/>
 				         <f:selectItems value="#{produtoMB.selectItemsCategorias}" />
 					</p:selectOneMenu>
         			
         			<p:outputLabel value="Valor: " />
-				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width: 400px">  
+				 	<pe:inputNumber id="Input1"  value="#{produtoMB.produto.valor}"  style="width: 400px" required="true/">  
                 		<p:ajax event="blur" update=":form:Input1" />  
             		</pe:inputNumber>  
 		

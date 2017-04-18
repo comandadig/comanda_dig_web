@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		</f:facet>
+		<ui:include src="../css/all_css.css" />
+	</h:head>
+</f:view>
+
+
+<h:form id="form">
+	
+	<p:layout resizerTip="Resize Me" togglerTipClosed="Open Me"
+		togglerTipOpen="Close Me">
+	
+	<p:growl id="growl" showDetail="false" sticky="true" closable="true" />
+	<p:messages id="messages" showDetail="false" closable="true" />
+	<ui:include src="../pages/leftPage.xhtml" />
+	<ui:include src="../pages/topPage.xhtml" />
+	
+	<p:layoutUnit  position="center">
+
+				         			
+  				
+				
+				<p:panel id="cadcat" header="Abertura de Comanda" style="width: 95%;" >
+				
+				<center>
+				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
+					
+				
+				<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
+				
+				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
+				<p:inputText id="scanInput" value="#{fechamentoMB.codComanda}" 
+						     maxlength="100" style="width:250px"> 
+       						<p:ajax update="@form"  event="change" process="@this" listener="#{fechamentoMB.vericarComanda()}" /> 
+       			</p:inputText>
+				
+				<p:commandButton icon="fa fa-search-plus" process="@this" update="@form" actionListener="#{fechamentoMB.vericarComanda()}"/>
+				</h:panelGrid>
+				
+				
+				<h:panelGrid  columns="2" id="matchGrid3" cellpadding="1" rendered="#{fechamentoMB.comandaDispo}">
+					<p:graphicImage url="../imagens/barcode-icon.jpg"  width="60px" height="60px" />
+					<p:graphicImage url="../imagens/okLogo.jpg"  width="20px" height="20px" />
+				</h:panelGrid>
+					     
+				</h:panelGrid>		     
+				</center>
+							
+				<p:separator></p:separator>
+				
+				
+				<p:dataTable    id="tablessdd" var="item" widgetVar="table" sortBy="#{item.idPedido}" value="#{fechamentoMB.pedidosComanda.pedidos}" >
+					
+					<f:facet name="header">
+				        Pedidos
+				    </f:facet>
+					
+					<p:column  headerText="Categoria" >
+		           
+		            <p:outputLabel value="#{item.produto.categoria.nome}" />
+       				 </p:column>
+											
+					<p:column  headerText="Item" >
+					
+					<p:panelGrid  styleClass="semBorda"  columns="2"  >
+					<p:graphicImage url="../fotos/prod_#{item.produto.idProduto}.jpg" width="30px"
+								height="30px" />
+					
+					<p:outputLabel value="#{item.produto.nome}" />
+					</p:panelGrid>
+					</p:column>
+					
+					
+					<p:column  headerText="Atendente" style="width: 10%;" >
+						<center>
+							<p:graphicImage url="../fotos/usu_#{item.user.idUser}.jpg" width="40px" height="40px"  />
+							<p:outputLabel value="#{item.user.nome}"/>
+						</center>
+					</p:column>
+					
+					
+					
+					<p:column  headerText="Valor Uni." style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.produto.valor}">
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
+					
+					<p:column  headerText="Quant." style="width: 10%;" >
+						<center>
+						<p:outputLabel value="#{item.quantItem}">
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
+					
+					<p:column  headerText="Valor." style="width: 10%;" >
+						<center>
+						<p:outputLabel  value="#{item.valor}">
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+						</center>
+					</p:column>
+					
+					
+					<p:columnGroup type="footer">
+					<p:row>
+						<p:column colspan="5"  style="text-align:right; font-weight:bold;" footerText="Total: " />
+						<p:column footerText="#{fechamentoMB.totalPedido()}" />
+					</p:row>
+				</p:columnGroup>
+				
+			</p:dataTable>
+		
+			<div align="right">
+          
+      		
+			<h:panelGrid columns="3" style="text-align: right;">
+				 <h:outputLabel for="basic" value="Percentual Garçom: " style="horizontal-align:right"/>
+        		 <p:spinner id="basic" value="#{fechamentoMB.percentual}" min="0" max="10" size="2" style="width:40px;" />
+        		 <h:outputLabel  value="%" style="horizontal-align:right"/>
+			</h:panelGrid>
+	        
+	        </div>
+	        <div class="ui-fluid">
+				<p:commandButton value="#{fechamentoMB.totalString()}" style="height:50px"  ajax="false" process="@this" action="#{pedidoMB.fecharPedido()}" />
+			</div>
+					
+			</p:panel>
+		
+		
+</p:layoutUnit>	
+</p:layout>
+
+
+	
+</h:form>
+
+</html>

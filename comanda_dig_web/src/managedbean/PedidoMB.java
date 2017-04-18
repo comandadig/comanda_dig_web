@@ -86,6 +86,8 @@ public class PedidoMB extends AbstractMB implements Serializable {
 	
 	public void fecharPedido(){
 		pedidoFacade.fecharPedido(pedidosList, comanda, user);
+		this.menssagemSucesso("Pedido cadastrado com sucesso. ");
+		this.ini();
 	}
 	
 	
