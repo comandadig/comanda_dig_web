@@ -33,21 +33,22 @@
 				         			
   				
 				
-				<p:panel id="cadcat" header="Abertura de Comanda" style="width: 95%;" >
-				
+				<p:panel id="cadcat" header="Fechamento de Comanda" style="width: 95%;" >
+				<f:facet name="header">
+				    </f:facet>
 				<center>
+				
+				
+				
 				<h:panelGrid  columns="3" id="matchGrid" cellpadding="5">
 					
 				
 				<p:outputLabel  value="Código da Comanda:" style="width: 120px"/>
 				
 				<h:panelGrid  columns="2" id="matchGrid4" cellpadding="1" >
-				<p:inputText id="scanInput" value="#{fechamentoMB.codComanda}" 
-						     maxlength="100" style="width:250px"> 
-       						<p:ajax update="@form"  event="change" process="@this" listener="#{fechamentoMB.vericarComanda()}" /> 
-       			</p:inputText>
+				<p:inputText id="idptt" value="#{fechamentoMB.codComanda}" maxlength="100" style="width:250px" /> 
 				
-				<p:commandButton icon="fa fa-search-plus" process="@this" update="@form" actionListener="#{fechamentoMB.vericarComanda()}"/>
+				<p:commandButton icon="fa fa-search-plus" process="matchGrid" update="@form" actionListener="#{fechamentoMB.vericarComanda()}"/>
 				</h:panelGrid>
 				
 				
@@ -62,7 +63,7 @@
 				<p:separator></p:separator>
 				
 				
-				<p:dataTable    id="tablessdd" var="item" widgetVar="table" sortBy="#{item.idPedido}" value="#{fechamentoMB.pedidosComanda.pedidos}" >
+				<p:dataTable rendered="#{fechamentoMB.comandaDispo}" id="tablessdd" var="item" widgetVar="table" sortBy="#{item.idPedido}" value="#{fechamentoMB.pedidosComanda.pedidos}" >
 					
 					<f:facet name="header">
 				        Pedidos
@@ -131,16 +132,34 @@
 			<div align="right">
           
       		
-			<h:panelGrid columns="3" style="text-align: right;">
+			<h:panelGrid columns="3" style="text-align: right;" rendered="#{fechamentoMB.comandaDispo}" >
 				 <h:outputLabel for="basic" value="Percentual Garçom: " style="horizontal-align:right"/>
-        		 <p:spinner id="basic" value="#{fechamentoMB.percentual}" min="0" max="10" size="2" style="width:40px;" />
+        		 <p:spinner id="basic" value="#{fechamentoMB.percentual}" min="0" max="10" size="2">
+        		 	 <p:ajax update="btId"  process="@this" listener="#{fechamentoMB.totalString()}" />
+        		 </p:spinner>
         		 <h:outputLabel  value="%" style="horizontal-align:right"/>
 			</h:panelGrid>
 	        
 	        </div>
-	        <div class="ui-fluid">
-				<p:commandButton value="#{fechamentoMB.totalString()}" style="height:50px"  ajax="false" process="@this" action="#{pedidoMB.fecharPedido()}" />
+	        <div class="ui-fluid"  >
+				<p:commandButton id="btId" rendered="#{fechamentoMB.comandaDispo}"  onclick="PF('dlg').show()" value="#{fechamentoMB.totalString()}" style="height:50px" />
 			</div>
+			
+			<p:dialog widgetVar="dlg"  closable="false" showEffect="fade" header="Confirmação" hideEffect="fade">
+		       <p:panel>
+		         <h:panelGrid>
+		         	 <p:outputLabel value="#{fechamentoMB.totalString()}"></p:outputLabel>
+		         </h:panelGrid>
+		       	
+				<p:separator></p:separator>	       
+		       <center> 
+		        <p:commandButton value="Sim" oncomplete="PF('dlg').hide()" type="submit" update="@form" process="@this" ajax="true"  actionListener="#{fechamentoMB.fecharComanda}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" onclick="PF('dlg').hide()"  type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		 		</center>
+		 		
+		 		</p:panel>
+		 		
+		 </p:dialog>
 					
 			</p:panel>
 		
@@ -151,5 +170,6 @@
 
 	
 </h:form>
+
 
 </html>

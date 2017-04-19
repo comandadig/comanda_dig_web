@@ -2,6 +2,7 @@ package managedbean;
 
 import java.text.DecimalFormat;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -16,10 +17,14 @@ import model.PedidosComanda;
 @ViewScoped
 public class FechamentoMB extends AbstractMB{
 
+	private static final String FECHAMENTO_COMANDA_VALOR_TOTAL = "Fechamento Comanda. Valor Total: ";
+
+	private static final String MASK = "#,##0.00";
+
 	@EJB
 	private ComandaFacade comandaFacade;
 	
-	private String codComanda;
+	private String codComanda = "";
 	private boolean comandaDispo;
 	private Comanda comanda;
 	private PedidosComanda pedidosComanda;
@@ -39,7 +44,9 @@ public class FechamentoMB extends AbstractMB{
 	
 	public String totalString(){
 		
-		String msg = "Fechamento Comanda. Valor Total: ";
+		if (pedidosComanda == null || pedidosComanda.getPedidos() == null) return "0"; 
+		
+		String msg = FECHAMENTO_COMANDA_VALOR_TOTAL;
 		double result = 0;
 		if (pedidosComanda != null){
 			for (Pedido pedido : pedidosComanda.getPedidos()) {
@@ -47,7 +54,7 @@ public class FechamentoMB extends AbstractMB{
 			}
 		}
 		result = result + ((result * percentual) / 100);
-		DecimalFormat formato = new DecimalFormat("#,##0.00");
+		DecimalFormat formato = new DecimalFormat(MASK);
 		msg = msg + formato.format(result);
 		return msg;
 	}
@@ -60,11 +67,27 @@ public class FechamentoMB extends AbstractMB{
 				result = result + pedido.getValor();
 			}
 		}
-		DecimalFormat formato = new DecimalFormat("#,##0.00");  
+		DecimalFormat formato = new DecimalFormat(MASK);  
 		return formato.format(result);
 	}
 
 
+	@PostConstruct
+	public void init(){
+		codComanda = new String("");
+		comandaDispo = false;
+		comanda = new Comanda();
+		pedidosComanda = new PedidosComanda();
+	    percentual = 10;
+	}
+	
+	
+	public void fecharComanda(){
+		super.menssagemSucesso("Comanda fechada com sucesso.");
+		this.init();
+		 System.out.println("entrou...");
+	}
+	
 	public ComandaFacade getComandaFacade() {
 		return comandaFacade;
 	}
