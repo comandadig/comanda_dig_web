@@ -20,10 +20,15 @@ public class FechamentoMB extends AbstractMB{
 	private static final String FECHAMENTO_COMANDA_VALOR_TOTAL = "Fechamento Comanda. Valor Total: ";
 
 	private static final String MASK = "#,##0.00";
+	
+	
 
 	@EJB
 	private ComandaFacade comandaFacade;
 	
+	private String formaPagamento = "D";
+	private double valorCliente = 0;
+	private double valorTroco = 0;
 	private String codComanda = "";
 	private boolean comandaDispo;
 	private Comanda comanda;
@@ -74,6 +79,9 @@ public class FechamentoMB extends AbstractMB{
 
 	@PostConstruct
 	public void init(){
+		valorCliente = 0;
+		valorTroco = 0;
+		formaPagamento = "D";
 		codComanda = new String("");
 		comandaDispo = false;
 		comanda = new Comanda();
@@ -83,9 +91,30 @@ public class FechamentoMB extends AbstractMB{
 	
 	
 	public void fecharComanda(){
-		super.menssagemSucesso("Comanda fechada com sucesso.");
-		this.init();
-		 System.out.println("entrou...");
+		try {
+			comanda.setFormaPagamento(formaPagamento);
+			comandaFacade.fecharComanda(comanda,percentual);
+			this.init();
+			super.menssagemSucesso("Comanda fechada com Sucesso..");
+		} catch (ComandaException e) {
+			super.menssagemErro(e.getMessage());
+		}
+		
+	}
+	
+	
+	public void calculaTroco(){
+		
+		double result = 0;
+		if (pedidosComanda != null){
+			for (Pedido pedido : pedidosComanda.getPedidos()) {
+				result = result + pedido.getValor();
+			}
+		}
+		result = result + ((result * percentual) / 100);
+		
+		valorTroco = valorCliente - result;
+		
 	}
 	
 	public ComandaFacade getComandaFacade() {
@@ -147,6 +176,46 @@ public class FechamentoMB extends AbstractMB{
 
 	public void setPercentual(int percentual) {
 		this.percentual = percentual;
+	}
+
+
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+
+
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+
+	public static String getFechamentoComandaValorTotal() {
+		return FECHAMENTO_COMANDA_VALOR_TOTAL;
+	}
+
+
+	public static String getMask() {
+		return MASK;
+	}
+
+
+	public double getValorCliente() {
+		return valorCliente;
+	}
+
+
+	public void setValorCliente(double valorCliente) {
+		this.valorCliente = valorCliente;
+	}
+
+
+	public double getValorTroco() {
+		return valorTroco;
+	}
+
+
+	public void setValorTroco(double valorTroco) {
+		this.valorTroco = valorTroco;
 	}
 	
 	

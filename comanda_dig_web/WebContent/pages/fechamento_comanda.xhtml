@@ -135,7 +135,7 @@
 			<h:panelGrid columns="3" style="text-align: right;" rendered="#{fechamentoMB.comandaDispo}" >
 				 <h:outputLabel for="basic" value="Percentual Garçom: " style="horizontal-align:right"/>
         		 <p:spinner id="basic" value="#{fechamentoMB.percentual}" min="0" max="10" size="2">
-        		 	 <p:ajax update="btId"  process="@this" listener="#{fechamentoMB.totalString()}" />
+        		 	 <p:ajax update="btId,grifPop"  process="@this" listener="#{fechamentoMB.totalString()}" />
         		 </p:spinner>
         		 <h:outputLabel  value="%" style="horizontal-align:right"/>
 			</h:panelGrid>
@@ -146,15 +146,49 @@
 			</div>
 			
 			<p:dialog widgetVar="dlg"  closable="false" showEffect="fade" header="Confirmação" hideEffect="fade">
-		       <p:panel>
-		         <h:panelGrid>
-		         	 <p:outputLabel value="#{fechamentoMB.totalString()}"></p:outputLabel>
+		       <p:panel id="painel1">
+		         <center> 
+		         <h:panelGrid id="grifPop" >
+		         	 <h:outputLabel style="font-size:18px;font-weight: bold;" value="#{fechamentoMB.totalString()}"></h:outputLabel>
+		         </h:panelGrid>
+		         
+		         <h:panelGrid id="grifPop2" columns="2" >
+		         	
+		         	<p:selectOneRadio id="console" value="#{fechamentoMB.formaPagamento}" >
+						<p:ajax process="painel1" update="painel1" />	         	
+			            <f:selectItem itemLabel="Dinheiro" itemValue="D" />
+			            <f:selectItem itemLabel="Cartão de Débido" itemValue="CD" />
+			            <f:selectItem itemLabel="Cartão de Crédito" itemValue="CC" />
+			            <f:selectItem itemLabel="Cheque" itemValue="CH" />
+			            <f:selectItem itemLabel="Outros" itemValue="O" />
+        			</p:selectOneRadio>
+		         	
 		         </h:panelGrid>
 		       	
-				<p:separator></p:separator>	       
-		       <center> 
-		        <p:commandButton value="Sim" oncomplete="PF('dlg').hide()" type="submit" update="@form" process="@this" ajax="true"  actionListener="#{fechamentoMB.fecharComanda}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-		        <p:commandButton value="Não" onclick="PF('dlg').hide()"  type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:separator id="id1" rendered="#{fechamentoMB.formaPagamento == 'D'}"></p:separator >
+				
+				
+				<h:panelGrid id="id2" rendered="#{fechamentoMB.formaPagamento == 'D'}">
+					<center>
+					<h:outputLabel value="Calcular Troco" />
+					</center>
+				</h:panelGrid>
+				
+				<h:panelGrid id="id3" columns="4" rendered="#{fechamentoMB.formaPagamento == 'D'}">
+					
+					<h:outputLabel value="Cliente:" />
+					<p:inputNumber id="input1" value="#{fechamentoMB.valorCliente}">
+						<p:ajax listener="#{fechamentoMB.calculaTroco}" process="@this" update="input2" /> 
+					</p:inputNumber>
+					<h:outputLabel value="Troco:" />
+					<p:inputNumber id="input2" value="#{fechamentoMB.valorTroco}"/>  
+					
+				</h:panelGrid>	       
+				
+				<p:separator></p:separator>
+		       	<p:spacer height="20px"></p:spacer>
+		        <p:commandButton value="Fechar Comanda" oncomplete="PF('dlg').hide()" type="submit" update="@form" process="@this" ajax="true"  actionListener="#{fechamentoMB.fecharComanda}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Cancelar" onclick="PF('dlg').hide()"  type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 		 		</center>
 		 		
 		 		</p:panel>

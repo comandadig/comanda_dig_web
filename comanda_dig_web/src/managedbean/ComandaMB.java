@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import ejb.CaixaFacade;
 import ejb.ComandaFacade;
 import exception.ComandaException;
+import model.CartaoComanda;
 import model.Comanda;
 
 
@@ -55,7 +56,8 @@ public class ComandaMB extends AbstractMB implements Serializable {
 
 	public void consultaComanda(){
 		try {
-			comanda = comandaFacade.vericaAberturaComanda(codigoComanda);
+			CartaoComanda cartaoComanda = comandaFacade.vericaAberturaComanda(codigoComanda);
+			comanda.setCartaoComanda(cartaoComanda);
 			comandaDispo = true;
 		} catch (ComandaException e) {
 			menssagemErro(e.getMessage());

@@ -49,8 +49,7 @@ public class CaixaMB  implements Serializable {
 		if (list != null && !list.isEmpty()){
 			this.caixaAberto = true;
 			this.caixa = list.get(0);
-			this.comandasDisponiveis = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.DISPONIVEL);
-			this.comandasAbertas = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.ABERTO);
+			this.comandasAbertas = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.ABERTA);
 			
 		} else {
 			this.caixaAberto = false;
@@ -62,14 +61,13 @@ public class CaixaMB  implements Serializable {
 	
 	public void abrirCaixa(){
 		caixa = caixaFacade.abrirCaixa(caixa);
-		this.comandasDisponiveis = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.DISPONIVEL);
+		this.comandasDisponiveis = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.ABERTA);
 		this.caixaAberto = true;
 	}
 
 	
 	public void fecharCaixa(){
 		caixa = caixaFacade.abrirCaixa(caixa);
-		this.comandasDisponiveis = caixaFacade.findComandasByCaixa(caixa, SituacaoComanda.DISPONIVEL);
 		this.caixaAberto = true;
 	}
 
